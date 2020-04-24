@@ -1,10 +1,10 @@
 
 
 
-siEmbeddingPath = "/home/dilan/Private/Projects/FYP/Embeddings/hiru/si/"
-enEmbeddingPath = "/home/dilan/Private/Projects/FYP/Embeddings/hiru/en/"
-siDataPath = "/home/dilan/Private/Projects/FYP/Data-Formatted/hiru/si/"
-enDataPath = "/home/dilan/Private/Projects/FYP/Data-Formatted/hiru/en/"
+siEmbeddingPath = "/home/dilan/Private/Projects/FYP/Embeddings/datewise/hiru/si/"
+enEmbeddingPath = "/home/dilan/Private/Projects/FYP/Embeddings/datewise/hiru/en/"
+siDataPath = "/home/dilan/Private/Projects/FYP/Data-Formatted/datewise/hiru/si/"
+enDataPath = "/home/dilan/Private/Projects/FYP/Data-Formatted/datewise/hiru/en/"
 
 # siEmbeddingPath = "/home/dilan/Private/Projects/FYP/Embeddings/gossiplanka/si/"
 # enEmbeddingPath = "/home/dilan/Private/Projects/FYP/Embeddings/gossiplanka/en/"

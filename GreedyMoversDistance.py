@@ -25,14 +25,14 @@ def greedyMoversDistance(docA, docB, weightsA, weightsB):
         weightsB[sortedPair["j"]] = weigVecB - flow
         vecA = docVecA[sortedPair["i"]]
         vecB = docVecB[sortedPair["j"]]
-        # only euclidean
+        # only euclidean 100
         # distance = distance + np.linalg.norm(vecA - vecB) * flow
-        # only cosine
+        # only cosine 112
         # distance = distance + (1 - np.dot(vecA, vecB)/(np.linalg.norm(vecA)*np.linalg.norm(vecB))) * flow
-        # cosine + euclidean
-        # distance = distance + ((1 - np.dot(vecA, vecB)/(np.linalg.norm(vecA)*np.linalg.norm(vecB))) + np.linalg.norm(vecA - vecB)) * flow
-        # unit euclidean and cosine
-        distance = distance + ((1 - np.dot(vecA, vecB)/(np.linalg.norm(vecA)*np.linalg.norm(vecB))) + np.linalg.norm((vecA/np.linalg.norm(vecA)) - (vecB/np.linalg.norm(vecB)))) * flow
+        # cosine + euclidean 112
+        distance = distance + ((1 - np.dot(vecA, vecB)/(np.linalg.norm(vecA)*np.linalg.norm(vecB))) + np.linalg.norm(vecA - vecB)) * flow
+        # unit euclidean and cosine 112
+        # distance = distance + ((1 - np.dot(vecA, vecB)/(np.linalg.norm(vecA)*np.linalg.norm(vecB))) + np.linalg.norm((vecA/np.linalg.norm(vecA)) - (vecB/np.linalg.norm(vecB)))) * flow
 
     # print("distance ", distance)
     return distance

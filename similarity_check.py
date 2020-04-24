@@ -88,12 +88,12 @@ def createEmbeddings(path, writepath, lang):
             # break
 
 def getFromHiruFolder():
-    sinhalafiles = os.listdir("/home/dilan/Private/Projects/FYP/Data-ToFormat/date_split/sinhala/January/01/")
-    englishfiles = os.listdir("/home/dilan/Private/Projects/FYP/Data-ToFormat/date_split/english/January/01/")
+    sinhalafiles = os.listdir("/home/dilan/Private/Projects/FYP/Data-ToFormat/date_split/sinhala/January/27/")
+    englishfiles = os.listdir("/home/dilan/Private/Projects/FYP/Data-ToFormat/date_split/english/January/27/")
     for sinhalafile in sinhalafiles:
         if sinhalafile in englishfiles:
-            formatFileForEmbedding("/home/dilan/Private/Projects/FYP/Data-ToFormat/date_split/sinhala/January/01/"+sinhalafile, "/home/dilan/Private/Projects/FYP/Data-Formatted/datewise/hiru/si/" + sinhalafile.replace(".json", ".txt"), "si")
-            formatFileForEmbedding("/home/dilan/Private/Projects/FYP/Data-ToFormat/date_split/english/January/01/"+sinhalafile, "/home/dilan/Private/Projects/FYP/Data-Formatted/datewise/hiru/en/" + sinhalafile.replace(".json", ".txt"), "en")
+            formatFileForEmbedding("/home/dilan/Private/Projects/FYP/Data-ToFormat/date_split/sinhala/January/27/"+sinhalafile, "/home/dilan/Private/Projects/FYP/Data-Formatted/datewise/hiru/si/" + sinhalafile.replace(".json", ".txt"), "si")
+            formatFileForEmbedding("/home/dilan/Private/Projects/FYP/Data-ToFormat/date_split/english/January/27/"+sinhalafile, "/home/dilan/Private/Projects/FYP/Data-Formatted/datewise/hiru/en/" + sinhalafile.replace(".json", ".txt"), "en")
 
 def getFromWswsFolder():
     sinhalafiles = os.listdir("/home/dilan/Downloads/New/wswssinhalaparallel/sinhala_parallel/sinhala/")
@@ -207,8 +207,8 @@ def getFromNewsfirstFolder():
 # formatFiles("/home/dilan/Private/Projects/FYP/Data-ToFormat/si/", "/home/dilan/Private/Projects/FYP/Data-Formatted/si/")
 ###### Hiru
 # getFromHiruFolder()
-createEmbeddings("/home/dilan/Private/Projects/FYP/Data-Formatted/hiru/en/", "/home/dilan/Private/Projects/FYP/Embeddings/datewise/hiru/en/", "en")
-createEmbeddings("/home/dilan/Private/Projects/FYP/Data-Formatted/hiru/si/", "/home/dilan/Private/Projects/FYP/Embeddings/datewise/hiru/si/", "si")
+createEmbeddings("/home/dilan/Private/Projects/FYP/Data-Formatted/datewise/hiru/en/", "/home/dilan/Private/Projects/FYP/Embeddings/datewise/hiru/en/", "en")
+createEmbeddings("/home/dilan/Private/Projects/FYP/Data-Formatted/datewise/hiru/si/", "/home/dilan/Private/Projects/FYP/Embeddings/datewise/hiru/si/", "si")
 
 # readCsvGossipLanka()
 # createEmbeddings("/home/dilan/Private/Projects/FYP/Data-Formatted/gossiplanka/en/", "/home/dilan/Private/Projects/FYP/Embeddings/gossiplanka/en/", "en")
