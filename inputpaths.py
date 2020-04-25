@@ -1,10 +1,10 @@
 
+# No datewise
 
-
-siEmbeddingPath = "/home/dilan/Private/Projects/FYP/Embeddings/datewise/hiru/si/"
-enEmbeddingPath = "/home/dilan/Private/Projects/FYP/Embeddings/datewise/hiru/en/"
-siDataPath = "/home/dilan/Private/Projects/FYP/Data-Formatted/datewise/hiru/si/"
-enDataPath = "/home/dilan/Private/Projects/FYP/Data-Formatted/datewise/hiru/en/"
+# siEmbeddingPath = "/home/dilan/Private/Projects/FYP/Embeddings/datewise/hiru/si/"
+# enEmbeddingPath = "/home/dilan/Private/Projects/FYP/Embeddings/datewise/hiru/en/"
+# siDataPath = "/home/dilan/Private/Projects/FYP/Data-Formatted/datewise/hiru/si/"
+# enDataPath = "/home/dilan/Private/Projects/FYP/Data-Formatted/datewise/hiru/en/"
 
 # siEmbeddingPath = "/home/dilan/Private/Projects/FYP/Embeddings/gossiplanka/si/"
 # enEmbeddingPath = "/home/dilan/Private/Projects/FYP/Embeddings/gossiplanka/en/"
@@ -30,3 +30,19 @@ enDataPath = "/home/dilan/Private/Projects/FYP/Data-Formatted/datewise/hiru/en/"
 # enEmbeddingPath = "/home/dilan/Private/Projects/FYP/Embeddings/wsws/en/"
 # siDataPath = "/home/dilan/Private/Projects/FYP/Data-Formatted/wsws/si/"
 # enDataPath = "/home/dilan/Private/Projects/FYP/Data-Formatted/wsws/en/"
+
+# Datewise
+
+# siEmbeddingPath = "/home/dilan/Private/Projects/FYP/Embeddings/datewise/newsfirst/si/"
+# enEmbeddingPath = "/home/dilan/Private/Projects/FYP/Embeddings/datewise/newsfirst/en/"
+# siDataPath = "/home/dilan/Private/Projects/FYP/Data-Formatted/datewise/newsfirst/si/"
+# enDataPath = "/home/dilan/Private/Projects/FYP/Data-Formatted/datewise/newsfirst/en/"
+
+# paralleltxt = "/home/dilan/Private/Projects/FYP/Training Data/Newsfirst/Newsfirst_english_sinhala.txt"
+
+siEmbeddingPath = "/home/dilan/Private/Projects/FYP/Embeddings/datewise/hiru/si/"
+enEmbeddingPath = "/home/dilan/Private/Projects/FYP/Embeddings/datewise/hiru/en/"
+siDataPath = "/home/dilan/Private/Projects/FYP/Data-Formatted/datewise/hiru/si/"
+enDataPath = "/home/dilan/Private/Projects/FYP/Data-Formatted/datewise/hiru/en/"
+
+paralleltxt = "/home/dilan/Private/Projects/FYP/Training Data/Hiru/hiru_english_sinhala.txt"

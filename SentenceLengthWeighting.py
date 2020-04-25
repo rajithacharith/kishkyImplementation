@@ -1,10 +1,8 @@
 import numpy as np
 import inputpaths
 
-path = inputpaths.enDataPath.replace("/en/", "/")
-
-def getSentenceLengthWeightings(fileName, lang):
-    docFile = open(path + lang + "/" + fileName.replace("raw", "txt"))
+def getSentenceLengthWeightings(datapath, fileName):
+    docFile = open(datapath + fileName.replace("raw", "txt"))
     sentenceCounts = getSentenceCounts(docFile)
     weightings = []
     total = getTotalTokenCount(sentenceCounts)

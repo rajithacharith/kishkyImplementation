@@ -2,22 +2,15 @@ import os
 import numpy as np
 import inputpaths
 
-temppathA = inputpaths.enEmbeddingPath
-temppathB = inputpaths.siEmbeddingPath
-
-def getSentenceDict(path):
+def getSentenceDict(datapath):
     idfWeights = []
     sentenceDic = {}
-    files = []
-    if "/en/" in path:
-        files = os.listdir(temppathA)
-    if "/si/" in path:
-        files = os.listdir(temppathB)
+    files = os.listdir(datapath)
     x=0
     for tempfile in files:
         # x=x+1
         # print(x)
-        tempfile = open(path + tempfile.replace("raw", "txt"))
+        tempfile = open(datapath + tempfile)
         sentences = tempfile.readlines()
         for sentence in sentences:
             if sentence in sentenceDic:
@@ -27,7 +20,7 @@ def getSentenceDict(path):
         tempfile.close()
     idfDictionary = {}
     for tempfile in files:
-        txtfile = open(path + tempfile.replace("raw", "txt"))
+        txtfile = open(datapath + tempfile)
         idfDictionary[tempfile] = []
         sentences = txtfile.readlines()
         for sentence in sentences:
@@ -41,8 +34,11 @@ def getIDFWeightingsForFile(filename, path, idfDictionary):
     sentences = tempfile.readlines()
     # totalDocs = len(os.listdir(path))
     totalDocs = 3000
-    # print(idfDictionary)
-    for count in idfDictionary[filename]:
+    for count in idfDictionary[filename.replace("raw", "txt")]:
         weightings.append(1 + np.log((totalDocs + 1)/(1 + count)))
     return weightings
 
+# crosslingual word 
+# multilingual
+# bilingual
+# github repo eka cite krla tyeda balanna - lakmaligen ahanna

@@ -19,6 +19,7 @@ englishsplitter = SentenceSplitter(language='en')
 
 def convertToEmbedding(readpath, writepath, lang):
     os.system("${LASER}/tasks/embed/embed.sh " + readpath + " " + lang + " " + writepath)
+    # os.system("/home/dilan/Private/Projects/FYP/Laser/LASER/tasks/embed/embed.sh " + readpath + " " + lang + " " + writepath)
 
 def formatFileForEmbedding(readpath, writepath, lang):
     try:
@@ -203,12 +204,85 @@ def getFromNewsfirstFolder():
         else:
             formatArmyFileForEmbedding("/home/dilan/Private/Projects/FYP/Data-ToFormat/newsfirst/English/" + enfile, "/home/dilan/Private/Projects/FYP/Data-Formatted/newsfirst/en/" + enfile.replace(".json", ".txt"), "en")
 
-# formatFiles("/home/dilan/Private/Projects/FYP/Data-ToFormat/en/", "/home/dilan/Private/Projects/FYP/Data-Formatted/en/")
-# formatFiles("/home/dilan/Private/Projects/FYP/Data-ToFormat/si/", "/home/dilan/Private/Projects/FYP/Data-Formatted/si/")
+def formatNewsfirstDateWiseWithoutParallelChecking(news):
+    print("Hey")
+    sipath = "/home/dilan/Private/Projects/FYP/Data-ToFormat/date_split/" + news + "/sinhala/"
+    enpath = "/home/dilan/Private/Projects/FYP/Data-ToFormat/date_split/" + news + "/english/"
+    tapath = "/home/dilan/Private/Projects/FYP/Data-ToFormat/date_split/" + news + "/tamil/"
+    simonths = os.listdir(sipath)
+    enmonths = os.listdir(enpath)
+    tamonths = os.listdir(tapath)
+    for simonth in simonths:
+        try:
+            os.mkdir("/home/dilan/Private/Projects/FYP/Data-Formatted/datewise/" + news + "/si/" + simonth)
+            os.mkdir("/home/dilan/Private/Projects/FYP/Embeddings/datewise/" + news + "/si/" + simonth)
+        except:
+            print(" ")
+        sidays = os.listdir(sipath + simonth + "/")
+        for siday in sidays:
+            try:
+                os.mkdir("/home/dilan/Private/Projects/FYP/Data-Formatted/datewise/" + news + "/si/" + simonth + "/" + siday)
+                os.mkdir("/home/dilan/Private/Projects/FYP/Embeddings/datewise/" + news + "/si/" + simonth + "/" + siday)
+            except:
+                print(" ")
+            sifiles = os.listdir(sipath + simonth + "/" + siday + "/")
+            for sifile in sifiles:
+                formatArmyFileForEmbedding(sipath + simonth + "/" + siday + "/" + sifile, 
+                "/home/dilan/Private/Projects/FYP/Data-Formatted/datewise/" + news + "/si/" 
+                + simonth + "/" + siday + "/" + sifile.replace("json", "txt"), "si")
+                convertToEmbedding("/home/dilan/Private/Projects/FYP/Data-Formatted/datewise/" + news + "/si/"
+                + simonth + "/" + siday + "/" + sifile.replace("json", "txt"),
+                "/home/dilan/Private/Projects/FYP/Embeddings/datewise/" + news + "/si/" + simonth + "/" + siday + "/" + sifile.replace("json", "raw"),
+                "si")
+    for enmonth in enmonths:
+        try:
+            os.mkdir("/home/dilan/Private/Projects/FYP/Data-Formatted/datewise/" + news + "/en/" + enmonth)
+            os.mkdir("/home/dilan/Private/Projects/FYP/Embeddings/datewise/" + news + "/en/" + enmonth)
+        except:
+            print(" ")
+        endays = os.listdir(enpath + enmonth + "/")
+        for enday in endays:
+            try:
+                os.mkdir("/home/dilan/Private/Projects/FYP/Data-Formatted/datewise/" + news + "/en/" + enmonth + "/" + enday)
+                os.mkdir("/home/dilan/Private/Projects/FYP/Embeddings/datewise/" + news + "/en/" + enmonth + "/" + enday)
+            except:
+                print(" ")
+            enfiles = os.listdir(enpath + enmonth + "/" + enday + "/")
+            for enfile in enfiles:
+                formatArmyFileForEmbedding(enpath + enmonth + "/" + enday + "/" + enfile, 
+                "/home/dilan/Private/Projects/FYP/Data-Formatted/datewise/" + news + "/en/" 
+                + enmonth + "/" + enday + "/" + enfile.replace("json", "txt"), "en")
+                convertToEmbedding("/home/dilan/Private/Projects/FYP/Data-Formatted/datewise/" + news + "/en/"
+                + enmonth + "/" + enday + "/" + enfile.replace("json", "txt"),
+                "/home/dilan/Private/Projects/FYP/Embeddings/datewise/" + news + "/en/" + enmonth + "/" + enday + "/" + enfile.replace("json", "raw"),
+                "en")
+    for tamonth in tamonths:
+        try:
+            os.mkdir("/home/dilan/Private/Projects/FYP/Data-Formatted/datewise/" + news + "/ta/" + tamonth)
+            os.mkdir("/home/dilan/Private/Projects/FYP/Embeddings/datewise/" + news + "/ta/" + tamonth)
+        except:
+            print(" ")
+        tadays = os.listdir(tapath + tamonth + "/")
+        for taday in tadays:
+            try:
+                os.mkdir("/home/dilan/Private/Projects/FYP/Data-Formatted/datewise/" + news + "/ta/" + tamonth + "/" + taday)
+                os.mkdir("/home/dilan/Private/Projects/FYP/Embeddings/datewise/" + news + "/ta/" + tamonth + "/" + taday)
+            except:
+                print(" ")
+            tafiles = os.listdir(tapath + tamonth + "/" + taday + "/")
+            for tafile in tafiles:
+                formatArmyFileForEmbedding(tapath + tamonth + "/" + taday + "/" + tafile, 
+                "/home/dilan/Private/Projects/FYP/Data-Formatted/datewise/" + news + "/ta/" 
+                + tamonth + "/" + taday + "/" + tafile.replace("json", "txt"), "ta")
+                convertToEmbedding("/home/dilan/Private/Projects/FYP/Data-Formatted/datewise/" + news + "/ta/"
+                + tamonth + "/" + taday + "/" + tafile.replace("json", "txt"),
+                "/home/dilan/Private/Projects/FYP/Embeddings/datewise/" + news + "/ta/" + tamonth + "/" + taday + "" + tafile.replace("json", "raw"),
+                "ta")
+
 ###### Hiru
 # getFromHiruFolder()
-createEmbeddings("/home/dilan/Private/Projects/FYP/Data-Formatted/datewise/hiru/en/", "/home/dilan/Private/Projects/FYP/Embeddings/datewise/hiru/en/", "en")
-createEmbeddings("/home/dilan/Private/Projects/FYP/Data-Formatted/datewise/hiru/si/", "/home/dilan/Private/Projects/FYP/Embeddings/datewise/hiru/si/", "si")
+# createEmbeddings("/home/dilan/Private/Projects/FYP/Data-Formatted/datewise/hiru/en/", "/home/dilan/Private/Projects/FYP/Embeddings/datewise/hiru/en/", "en")
+# createEmbeddings("/home/dilan/Private/Projects/FYP/Data-Formatted/datewise/hiru/si/", "/home/dilan/Private/Projects/FYP/Embeddings/datewise/hiru/si/", "si")
 
 # readCsvGossipLanka()
 # createEmbeddings("/home/dilan/Private/Projects/FYP/Data-Formatted/gossiplanka/en/", "/home/dilan/Private/Projects/FYP/Embeddings/gossiplanka/en/", "en")
@@ -236,5 +310,9 @@ createEmbeddings("/home/dilan/Private/Projects/FYP/Data-Formatted/datewise/hiru/
 
 # Newsfirst
 # getFromNewsfirstFolder()
+# formatNewsfirstDateWiseWithoutParallelChecking()
 # createEmbeddings("/home/dilan/Private/Projects/FYP/Data-Formatted/newsfirst/en/", "/home/dilan/Private/Projects/FYP/Embeddings/newsfirst/en/", "en")
 # createEmbeddings("/home/dilan/Private/Projects/FYP/Data-Formatted/newsfirst/si/", "/home/dilan/Private/Projects/FYP/Embeddings/newsfirst/si/", "si")
+
+
+formatNewsfirstDateWiseWithoutParallelChecking("hiru")

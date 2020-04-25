@@ -49,5 +49,3 @@ for matchedPair in hirudatewisejanuary01:
 print("SLIDF count  : " + str(count))
 
 
-\n02 Mar, 2016\t", "| 6:38 am ", "\n"
-"\n12 May, 2016\t", "| 11:37 am ", "\n"

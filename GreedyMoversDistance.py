@@ -5,13 +5,9 @@ import inputpaths
 
 dim = 1024
 
-pathA = inputpaths.enEmbeddingPath
-pathB = inputpaths.siEmbeddingPath
-
-
-def greedyMoversDistance(docA, docB, weightsA, weightsB):
-    docVecA = getDocVec(docA, pathA)
-    docVecB = getDocVec(docB, pathB)
+def greedyMoversDistance(docA, docB, weightsA, weightsB, embedpathA, embedpathB):
+    docVecA = getDocVec(docA, embedpathA)
+    docVecB = getDocVec(docB, embedpathB)
     maxSortedVecs = getSortedDistances(docVecA, docVecB)
     minSortedVecs = np.flipud(maxSortedVecs)
     # print(minSortedVecs)
@@ -25,13 +21,13 @@ def greedyMoversDistance(docA, docB, weightsA, weightsB):
         weightsB[sortedPair["j"]] = weigVecB - flow
         vecA = docVecA[sortedPair["i"]]
         vecB = docVecB[sortedPair["j"]]
-        # only euclidean 100
+        # only euclidean
         # distance = distance + np.linalg.norm(vecA - vecB) * flow
-        # only cosine 112
+        # only cosine
         # distance = distance + (1 - np.dot(vecA, vecB)/(np.linalg.norm(vecA)*np.linalg.norm(vecB))) * flow
-        # cosine + euclidean 112
+        # cosine + euclidean
         distance = distance + ((1 - np.dot(vecA, vecB)/(np.linalg.norm(vecA)*np.linalg.norm(vecB))) + np.linalg.norm(vecA - vecB)) * flow
-        # unit euclidean and cosine 112
+        # unit euclidean and cosine
         # distance = distance + ((1 - np.dot(vecA, vecB)/(np.linalg.norm(vecA)*np.linalg.norm(vecB))) + np.linalg.norm((vecA/np.linalg.norm(vecA)) - (vecB/np.linalg.norm(vecB)))) * flow
 
     # print("distance ", distance)
@@ -54,33 +50,4 @@ def getDocVec(doc, path):
     docVec.resize(docVec.shape[0] // dim, dim)
     return docVec
 
-def temp(path1, path2):
-    files1 = os.listdir(path1)
-    files2 = os.listdir(path2)
-    docDistances = []
-
-    weightsA = []
-    weightsB = []
-    for file1 in files1:
-        weightsA.append(getSentenceLengthWeightings(file1, "en"))
-    for file2 in files2:
-        weightsB.append(getSentenceLengthWeightings(file2, "si"))
-
-    for i in range(len(files1)):
-        if (i == 300):
-            break
-        print(i)
-        tempDistances = []
-        for j in range(len(files2)):
-            weightA = weightsA[i].copy()
-            weightB = weightsB[j].copy()
-            tempDistances.append(greedyMoversDistance(files1[i], files2[j], weightA, weightB))
-        docDistances.append([files1[i], files2[tempDistances.index(min(tempDistances))]])
-
-    print(docDistances)
-    count = 0
-    for docDist in docDistances:
-        if docDist[0] == docDist[1]:
-            count = count + 1
-    print("count  : " + str(count))
 
