@@ -127,3 +127,8 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+DMS/
+en-si-dictionary/
+aug-en-si-dictionary/
+glossary/
