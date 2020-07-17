@@ -35,25 +35,56 @@
 
 # Datewise
 
-siEmbeddingPath = "/home/dilan/Private/Projects/FYP/Embeddings/datewise/newsfirst/si/"
-enEmbeddingPath = "/home/dilan/Private/Projects/FYP/Embeddings/datewise/newsfirst/en/"
-taEmbeddingPath = "/home/dilan/Private/Projects/FYP/Embeddings/datewise/newsfirst/ta/"
-siDataPath = "/home/dilan/Private/Projects/FYP/Data-Formatted/datewise/newsfirst/si/"
-enDataPath = "/home/dilan/Private/Projects/FYP/Data-Formatted/datewise/newsfirst/en/"
-taDataPath = "/home/dilan/Private/Projects/FYP/Data-Formatted/datewise/newsfirst/ta/"
+# EN-SI
+# existingDictionaryA = "/home/dilan/Private/Projects/FYP/kishkyImplementation/Dictionaries/EN-SI/combineddictionary.en"
+# existingDictionaryB = "/home/dilan/Private/Projects/FYP/kishkyImplementation/Dictionaries/EN-SI/combineddictionary.si"
+existingDictionaryA = "/home/dilan/Private/Projects/FYP/kishkyImplementation/Dictionaries/EN-SI/existingdictionary.en"
+existingDictionaryB = "/home/dilan/Private/Projects/FYP/kishkyImplementation/Dictionaries/EN-SI/existingdictionary.si"
+personNamesA = "/home/dilan/Private/Projects/FYP/kishkyImplementation/Dictionaries/EN-SI/person-names.en"
+personNamesB = "/home/dilan/Private/Projects/FYP/kishkyImplementation/Dictionaries/EN-SI/person-names.si"
+designationsA = "/home/dilan/Private/Projects/FYP/kishkyImplementation/Dictionaries/EN-SI/designations.en"
+designationsB = "/home/dilan/Private/Projects/FYP/kishkyImplementation/Dictionaries/EN-SI/designations.si"
 
-ensiparalleltxt = "/home/dilan/Private/Projects/FYP/Training Data/Newsfirst/Newsfirst_english_sinhala.txt"
-entaparalleltxt = "/home/dilan/Private/Projects/FYP/Training Data/Newsfirst/Newsfirst_english_tamil.txt"
+# EN-TA
+# existingDictionaryA = "/home/dilan/Private/Projects/FYP/kishkyImplementation/Dictionaries/EN-TA/combineddictionary.en"
+# existingDictionaryB = "/home/dilan/Private/Projects/FYP/kishkyImplementation/Dictionaries/EN-TA/combineddictionary.si"
+# existingDictionaryA = "/home/dilan/Private/Projects/FYP/kishkyImplementation/Dictionaries/EN-TA/existingdictionary.en"
+# existingDictionaryB = "/home/dilan/Private/Projects/FYP/kishkyImplementation/Dictionaries/EN-TA/existingdictionary.si"
+# personNamesA = "/home/dilan/Private/Projects/FYP/kishkyImplementation/Dictionaries/EN-TA/person-names.en"
+# personNamesB = "/home/dilan/Private/Projects/FYP/kishkyImplementation/Dictionaries/EN-TA/person-names.si"
+# designationsA = "/home/dilan/Private/Projects/FYP/kishkyImplementation/Dictionaries/EN-TA/designations.en"
+# designationsB = "/home/dilan/Private/Projects/FYP/kishkyImplementation/Dictionaries/EN-TA/designations.si"
 
-# siEmbeddingPath = "/home/dilan/Private/Projects/FYP/Embeddings/datewise/hiru/si/"
-# taEmbeddingPath = "/home/dilan/Private/Projects/FYP/Embeddings/datewise/hiru/ta/"
-# enEmbeddingPath = "/home/dilan/Private/Projects/FYP/Embeddings/datewise/hiru/en/"
-# siDataPath = "/home/dilan/Private/Projects/FYP/Data-Formatted/datewise/hiru/si/"
-# taDataPath = "/home/dilan/Private/Projects/FYP/Data-Formatted/datewise/hiru/ta/"
-# enDataPath = "/home/dilan/Private/Projects/FYP/Data-Formatted/datewise/hiru/en/"
+# # SI-TA
+# existingDictionaryA = "/home/dilan/Private/Projects/FYP/kishkyImplementation/Dictionaries/SI-TA/combineddictionary.en"
+# existingDictionaryB = "/home/dilan/Private/Projects/FYP/kishkyImplementation/Dictionaries/SI-TA/combineddictionary.si"
+# existingDictionaryA = "/home/dilan/Private/Projects/FYP/kishkyImplementation/Dictionaries/SI-TA/existingdictionary.en"
+# existingDictionaryB = "/home/dilan/Private/Projects/FYP/kishkyImplementation/Dictionaries/SI-TA/existingdictionary.si"
+# personNamesA = "/home/dilan/Private/Projects/FYP/kishkyImplementation/Dictionaries/SI-TA/person-names.en"
+# personNamesB = "/home/dilan/Private/Projects/FYP/kishkyImplementation/Dictionaries/SI-TA/person-names.si"
+# designationsA = "/home/dilan/Private/Projects/FYP/kishkyImplementation/Dictionaries/SI-TA/designations.en"
+# designationsB = "/home/dilan/Private/Projects/FYP/kishkyImplementation/Dictionaries/SI-TA/designations.si"
 
-# ensiparalleltxt = "/home/dilan/Private/Projects/FYP/Training Data/Hiru/hiru_english_sinhala.txt"
-# entaparalleltxt = "/home/dilan/Private/Projects/FYP/Training Data/Hiru/hiru_english_tamil.txt"
+# siEmbeddingPath = "/home/dilan/Private/Projects/FYP/Embeddings/datewise/newsfirst/si/"
+# enEmbeddingPath = "/home/dilan/Private/Projects/FYP/Embeddings/datewise/newsfirst/en/"
+# taEmbeddingPath = "/home/dilan/Private/Projects/FYP/Embeddings/datewise/newsfirst/ta/"
+# siDataPath = "/home/dilan/Private/Projects/FYP/Data-Formatted/datewise/newsfirst/si/"
+# enDataPath = "/home/dilan/Private/Projects/FYP/Data-Formatted/datewise/newsfirst/en/"
+# taDataPath = "/home/dilan/Private/Projects/FYP/Data-Formatted/datewise/newsfirst/ta/"
+
+# ensiparalleltxt = "/home/dilan/Private/Projects/FYP/Training Data/Newsfirst/Newsfirst_english_sinhala.txt"
+# entaparalleltxt = "/home/dilan/Private/Projects/FYP/Training Data/Newsfirst/Newsfirst_english_tamil.txt"
+
+siEmbeddingPath = "/home/dilan/Private/Projects/FYP/Embeddings/datewise/hiru/si/"
+taEmbeddingPath = "/home/dilan/Private/Projects/FYP/Embeddings/datewise/hiru/ta/"
+enEmbeddingPath = "/home/dilan/Private/Projects/FYP/Embeddings/datewise/hiru/en/"
+siDataPath = "/home/dilan/Private/Projects/FYP/Data-Formatted/datewise/hiru/si/"
+taDataPath = "/home/dilan/Private/Projects/FYP/Data-Formatted/datewise/hiru/ta/"
+enDataPath = "/home/dilan/Private/Projects/FYP/Data-Formatted/datewise/hiru/en/"
+
+ensiparalleltxt = "/home/dilan/Private/Projects/FYP/Training Data/Hiru/hiru_english_sinhala.txt"
+entaparalleltxt = "/home/dilan/Private/Projects/FYP/Training Data/Hiru/hiru_english_tamil.txt"
+sitaparalleltxt = "/home/dilan/Private/Projects/FYP/Training Data/Hiru/hiru_sinhala_tamil.txt"
 
 # siEmbeddingPath = "/home/dilan/Private/Projects/FYP/Embeddings/datewise/army/si/"
 # enEmbeddingPath = "/home/dilan/Private/Projects/FYP/Embeddings/datewise/army/en/"

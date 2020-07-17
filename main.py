@@ -8,14 +8,16 @@ from DatewiseEvaluater import evaluateDatewise
 import numpy as np
 import inputpaths
 
-embeddingPathA = inputpaths.enEmbeddingPath
+# embeddingPathA = inputpaths.enEmbeddingPath
+embeddingPathA = inputpaths.siEmbeddingPath
 # embeddingPathB = inputpaths.siEmbeddingPath
 embeddingPathB = inputpaths.taEmbeddingPath
-datPathA = inputpaths.enDataPath
+# datPathA = inputpaths.enDataPath
+datPathA = inputpaths.siDataPath
 # datPathB = inputpaths.siDataPath
 datPathB = inputpaths.taDataPath
 # paralleltxt = inputpaths.ensiparalleltxt
-paralleltxt = inputpaths.entaparalleltxt
+paralleltxt = inputpaths.sitaparalleltxt
 
 wordDictionary = {}
 
@@ -64,6 +66,7 @@ def runDatewise():
                 #     )
                 print(enYear, enMonth, enDay)
                 print(len(matchedpairs))
+                print(matchedpairs)
                 # print(matchedpairs)
                 result = evaluateDatewise(
                                 paralleltxt,
@@ -73,8 +76,8 @@ def runDatewise():
                 totcounts.append(result[1])
     # print(alignedcounts)
     # print(totcounts)
-    print("Aligned count - " + str(sum(alignedcounts)))
-    print("Total count - " + str(sum(totcounts)))
+    print("Aligned count -", sum(alignedcounts))
+    print("Total count -", sum(totcounts))
 
 def SentenceLengthAlignment(embedPathA, embedPathB, dataPathA, dataPathB): # hiru -  325/500 # gosssip - 296/300 # wsws - 497/500 # army - 523/535 # itn - 41/51
     try:
@@ -155,11 +158,6 @@ def IDFAlignment(embedPathA, embedPathB, dataPathA, dataPathB): # hiru - 281/500
 
     tempDistances = []
     for i in range(len(files1)):
-        # print(i)
-        # if i == 500:
-        #     print("breaking")
-        #     break
-        
         for j in range(len(files2)):
             weightA = weightsA[i].copy()
             weightB = weightsB[j].copy()
@@ -254,31 +252,20 @@ def normalizeDocumentMass(fileWeights):
     return fileWeights
 
 def loadDictionaries():
-    # enDictionary = open("./glossary/combinedGlossary.en", "r")
-    # siDictionary = open("./glossary/combinedGlossary.si", "r")
-    # taDictionary = open("./glossary/combinedGlossary.ta", "r")
-    # enDictionary = open("./aug-en-si-dictionary/augDic-nonNoun-terms.en", "r")
-    # siDictionary = open("./aug-en-si-dictionary/augDic-nonNoun-terms.si", "r")
-    enDictionary = open("./DMS/smt_nmt_datasets/parallel-corpus/glossary_unique-19.02.2020.en", "r")
-    taDictionary = open("./DMS/smt_nmt_datasets/parallel-corpus/glossary_unique-19.02.2020.ta", "r")
-    # ensienNameSet = open("/home/dilan/Private/Projects/FYP/kishkyImplementation/DMS/smt_nmt_datasets/si-en lists/person-names.en", "r")
-    # ensisiNameSet = open("/home/dilan/Private/Projects/FYP/kishkyImplementation/DMS/smt_nmt_datasets/si-en lists/person-names.si", "r")
-    entaenNameSet = open("/home/dilan/Private/Projects/FYP/kishkyImplementation/DMS/smt_nmt_datasets/ta-en lists/person-names.en", "r")
-    entataNameSet = open("/home/dilan/Private/Projects/FYP/kishkyImplementation/DMS/smt_nmt_datasets/ta-en lists/person-names.ta", "r")
+    # sitasiNameSet = open("/home/dilan/Private/Projects/FYP/kishkyImplementation/DMS/smt_nmt_datasets/si-ta lists/uniq_names.tok.si-ta.si", "r")
+    # sitataNameSet = open("/home/dilan/Private/Projects/FYP/kishkyImplementation/DMS/smt_nmt_datasets/si-ta lists/uniq_names.tok.si-ta.ta", "r")
 
-    enWords = enDictionary.readlines()
-    siWords = taDictionary.readlines()
+    wordsA = open(inputpaths.existingDictionaryA).readlines()
+    wordsB = open(inputpaths.existingDictionaryB).readlines()
     
-    enNames = entaenNameSet.readlines()
-    siNames = entataNameSet.readlines()
+    namesA = open(inputpaths.personNamesA).readlines()
+    namesB = open(inputpaths.personNamesB).readlines()
 
-    for i in range(len(enWords)):
-        wordDictionary[enWords[i].strip().replace("\n", "")] = siWords[i].strip().replace("\n", "")
-    for  i in range(len(enNames)):
-        wordDictionary[enNames[i].strip().replace("\n", "")] = siNames[i].strip().replace("\n", "")
+    for i in range(len(wordsA)):
+        wordDictionary[wordsA[i].strip().replace("\n", "")] = wordsB[i].strip().replace("\n", "")
+    for  i in range(len(namesA)):
+        wordDictionary[namesA[i].strip().replace("\n", "")] = namesB[i].strip().replace("\n", "")
     # print(wordDictionary)
 
 if __name__ == "__main__":
     main()
-# mine - 1173, aloka - 1167, aloka with desing - 1181, mine with desig - 1185
-# metric learning + new glossary + designation - 1215

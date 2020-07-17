@@ -1,3 +1,5 @@
+import inputpaths
+
 # wordDictionary = {}
 
 # def loadDictionaries():
@@ -11,21 +13,25 @@
 
 enDesigList = []
 siDesigList = []
-enDesigDic = {}
+desigDic = {}
 
 print("creating desig list")
 # with open("/home/dilan/Private/Projects/FYP/kishkyImplementation/DMS/smt_nmt_datasets/si-en lists/designation.en", "r") as tempfile1:
-with open("/home/dilan/Private/Projects/FYP/kishkyImplementation/DMS/smt_nmt_datasets/ta-en lists/designation.en", "r") as tempfile1:
+# with open("/home/dilan/Private/Projects/FYP/kishkyImplementation/DMS/smt_nmt_datasets/ta-en lists/designation.en", "r") as tempfile1:
+# with open("/home/dilan/Private/Projects/FYP/kishkyImplementation/DMS/smt_nmt_datasets/si-ta lists/parallel-designations-term1-tr.cl.si-ta.si", "r") as tempfile1:
+with open(inputpaths.designationsA) as designationsFileA:
     # with open("/home/dilan/Private/Projects/FYP/kishkyImplementation/DMS/smt_nmt_datasets/si-en lists/designation.si", "r") as tempfile2:
-    with open("/home/dilan/Private/Projects/FYP/kishkyImplementation/DMS/smt_nmt_datasets/ta-en lists/designation.ta", "r") as tempfile2:
-        enlines = tempfile1.readlines()
-        silines = tempfile2.readlines()
+    # with open("/home/dilan/Private/Projects/FYP/kishkyImplementation/DMS/smt_nmt_datasets/ta-en lists/designation.ta", "r") as tempfile2:
+    # with open("/home/dilan/Private/Projects/FYP/kishkyImplementation/DMS/smt_nmt_datasets/si-ta lists/parallel-designations-term1-tr.cl.si-ta.ta", "r") as tempfile2:
+    with open(inputpaths.designationsB) as designationsFileB:
+        linesA = designationsFileA.readlines()
+        linesB = designationsFileB.readlines()
         # for line in enlines:
         #     enDesigList.append(line.strip().replace("\n", "").lower())
         # for line in silines:
         #     siDesigList.append(line.strip().replace("\n", "").lower())
-        for i in range(len(enlines)):
-            enDesigDic[enlines[i].strip().replace("\n", "").lower()] = silines[i].strip().replace("\n", "")
+        for i in range(len(linesA)):
+            desigDic[linesA[i].strip().replace("\n", "").lower()] = linesB[i].strip().replace("\n", "")
 # print(enDesigDic)
 
 def calcDictionaryWeight(fileA, fileB, pathA, pathB, wordDictionary):
@@ -79,41 +85,42 @@ def calcDictionaryWeight(fileA, fileB, pathA, pathB, wordDictionary):
 #                 print(enDesigList[i], siDesigList[i])
 #     return count
 
-def checkDesignations(enLine, siLine):
+def checkDesignations(lineA, lineB):
     count = 1
-    enWords = enLine.strip().replace("\n", "").replace(".", "").lower().split()
-    siLine = siLine.strip().replace("\n", "")
+    wordsA = lineA.strip().replace("\n", "").replace(".", "").lower().split()
+    lineB = lineB.strip().replace("\n", "")
 
-    if (len(enWords) > 3):
+    if (len(wordsA) > 3):
         for i in range(1, 5):
-            for j in range(0, len(enWords) - (i - 1)):
-                x = " ".join(enWords[j: j + i])
-                y = enDesigDic.get(x, False)
+            for j in range(0, len(wordsA) - (i - 1)):
+                x = " ".join(wordsA[j: j + i])
+                y = desigDic.get(x, False)
                 if (y):
-                    if (y in siLine):
+                    if (y in lineB):
                         count = count + len(x.split())
     else:
-        for i in range(1, len(enWords) + 1):
-            for j in range(0, len(enWords) - (i - 1)):
-                x = " ".join(enWords[j: j + i])
-                y = enDesigDic.get(x, False)
+        for i in range(1, len(wordsA) + 1):
+            for j in range(0, len(wordsA) - (i - 1)):
+                x = " ".join(wordsA[j: j + i])
+                y = desigDic.get(x, False)
                 if (y):
-                    if (y in siLine):
+                    if (y in lineB):
                         count = count + len(x.split())
     return count
 
-def calcDicWeightForLine(enLine, siLine, wordDictionary):
-    count = checkDesignations(enLine, siLine)
-    enWords = enLine.split()
-    siWords = siLine.split()
-    for i in range(len(enWords)):
-        enWords[i] = enWords[i].strip().replace(".", "").replace(",", "").lower()
-    for i in range(len(siWords)):
-        siWords[i] = siWords[i].strip().replace(".", "").replace(",", "")
-    for enWord in enWords:
+def calcDicWeightForLine(lineA, lineB, wordDictionary):
+    count = checkDesignations(lineA, lineB)
+    # count = 1
+    wordsA = lineA.split()
+    wordsB = lineB.split()
+    for i in range(len(wordsA)):
+        wordsA[i] = wordsA[i].strip().replace(".", "").replace(",", "").lower()
+    for i in range(len(wordsB)):
+        wordsB[i] = wordsB[i].strip().replace(".", "").replace(",", "")
+    for enWord in wordsA:
         value = wordDictionary.get(enWord, False)
         if (value != False):
-            if (value in siWords):
+            if (value in wordsB):
                 count = count + 1
-                siWords.remove(value)
-    return (len(enWords) - count)/len(enWords)
+                wordsB.remove(value)
+    return (len(wordsA) - count)/len(wordsA)

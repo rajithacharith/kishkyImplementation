@@ -1,6 +1,5 @@
 import numpy as np
 import inputpaths
-from stopwords import enstopwords, sistopwords
 
 def getSentenceLengthWeightings(datapath, fileName, lang):
     docFile = open(datapath + fileName.replace("raw", "txt"))

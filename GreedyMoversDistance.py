@@ -1,13 +1,13 @@
 import numpy as np
 import os
 import inputpaths
-import pickle
+# import pickle
 import time
 from DictionaryWeighting import calcDicWeightForLine
 
 dim = 1024
-filename = '/home/dilan/Private/Projects/FYP/Supervised Distance Metric/model2_itm2.sav'
-loaded_model = pickle.load(open(filename, 'rb'))
+# filename = '/home/dilan/Private/Projects/FYP/Supervised Distance Metric/model2_itm2.sav'
+# loaded_model = pickle.load(open(filename, 'rb'))
 # Input for the method must be array of tuples
 
 # def greedyMoversDistance(docA, docB, weightsA, weightsB, embedpathA, embedpathB):
