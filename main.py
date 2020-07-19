@@ -8,16 +8,11 @@ from DatewiseEvaluater import evaluateDatewise
 import numpy as np
 import inputpaths
 
-# embeddingPathA = inputpaths.enEmbeddingPath
-embeddingPathA = inputpaths.siEmbeddingPath
-# embeddingPathB = inputpaths.siEmbeddingPath
-embeddingPathB = inputpaths.taEmbeddingPath
-# datPathA = inputpaths.enDataPath
-datPathA = inputpaths.siDataPath
-# datPathB = inputpaths.siDataPath
-datPathB = inputpaths.taDataPath
-# paralleltxt = inputpaths.ensiparalleltxt
-paralleltxt = inputpaths.sitaparalleltxt
+embeddingPathA = inputpaths.embeddingPathA
+embeddingPathB = inputpaths.embeddingPathB
+datPathA = inputpaths.dataPathA
+datPathB = inputpaths.dataPathB
+paralleltxt = inputpaths.paralleltxt
 
 wordDictionary = {}
 
@@ -95,15 +90,7 @@ def SentenceLengthAlignment(embedPathA, embedPathB, dataPathA, dataPathB): # hir
         weightsB.append(normalizeDocumentMass(getSentenceLengthWeightings(dataPathB, file2, 'ta')))
     tempDistances = []
     for i in range(len(files1)):
-        # print(i)
-        # if i == 500:
-        #     print("breaking")
-        #     break
-        
         for j in range(len(files2)):
-            # if j == 500:
-            #     print("breaking")
-            #     break
             weightA = weightsA[i].copy()
             weightB = weightsB[j].copy()
             tempDistances.append({"a": files1[i], "b": files2[j], "distance": greedyMoversDistance(files1[i], files2[j], weightA, weightB, embedPathA, embedPathB, wordDictionary)})
@@ -262,9 +249,17 @@ def loadDictionaries():
     namesB = open(inputpaths.personNamesB).readlines()
 
     for i in range(len(wordsA)):
-        wordDictionary[wordsA[i].strip().replace("\n", "")] = wordsB[i].strip().replace("\n", "")
+        wordA = wordsA[i].strip().replace("\n", "")
+        if (wordDictionary.get(wordA, False)):
+            wordDictionary[wordA].append(wordsB[i].strip().replace("\n", ""))
+        else:
+            wordDictionary[wordA]  = [wordsB[i].strip().replace("\n", "")]
     for  i in range(len(namesA)):
-        wordDictionary[namesA[i].strip().replace("\n", "")] = namesB[i].strip().replace("\n", "")
+        nameA = namesA[i].strip().replace("\n", "")
+        if (wordDictionary.get(nameA, False)):
+            wordDictionary[nameA].append(namesB[i].strip().replace("\n", ""))
+        else:
+            wordDictionary[nameA] = [namesB[i].strip().replace("\n", "")]
     # print(wordDictionary)
 
 if __name__ == "__main__":

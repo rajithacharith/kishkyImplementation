@@ -117,10 +117,11 @@ def calcDicWeightForLine(lineA, lineB, wordDictionary):
         wordsA[i] = wordsA[i].strip().replace(".", "").replace(",", "").lower()
     for i in range(len(wordsB)):
         wordsB[i] = wordsB[i].strip().replace(".", "").replace(",", "")
-    for enWord in wordsA:
-        value = wordDictionary.get(enWord, False)
-        if (value != False):
-            if (value in wordsB):
-                count = count + 1
-                wordsB.remove(value)
+    for wordA in wordsA:
+        values = wordDictionary.get(wordA, False)
+        if (values != False):
+            for value in values:
+                if (value in wordsB):
+                    count = count + 1
+                    wordsB.remove(value)
     return (len(wordsA) - count)/len(wordsA)
