@@ -60,8 +60,7 @@ def runDatewise():
                 #     datPathB + enYear + "/" + enMonth + "/" + enDay + "/"
                 #     )
                 print(enYear, enMonth, enDay)
-                print(len(matchedpairs))
-                print(matchedpairs)
+                # print(len(matchedpairs))
                 # print(matchedpairs)
                 result = evaluateDatewise(
                                 paralleltxt,
@@ -104,7 +103,7 @@ def SentenceLengthAlignment(embedPathA, embedPathB, dataPathA, dataPathB): # hir
             count = count + 1
     return matchedPairs
 
-def IDFAlignment(embedPathA, embedPathB, dataPathA, dataPathB): # hiru - 281/500 # gosssip - 287/300 # army - 478/535 # itn - 39/51
+def IDFAlignment(embedPathA, embedPathB, dataPathA, dataPathB):
     try:
         files1 = os.listdir(embedPathA)
         files2 = os.listdir(embedPathB)
@@ -115,32 +114,41 @@ def IDFAlignment(embedPathA, embedPathB, dataPathA, dataPathB): # hiru - 281/500
     weightsA = []
     weightsB = []
 
-    # sentenceDictA = getSentenceDict(dataPathA)
-    # sentenceDictB = getSentenceDict(dataPathB)
+    # idfDictA = getIDFDictionaryWithNgrams(dataPathA, 6)
+    # idfDictB = getIDFDictionaryWithNgrams(dataPathB, 6)
 
-    idfDictA = getIDFDictionaryWithNgrams(dataPathA, 6)
-    idfDictB = getIDFDictionaryWithNgrams(dataPathB, 6)
+    # tfDictA = getTFDictionaryWithNgrams(dataPathA, 1)
+    # tfDictB = getTFDictionaryWithNgrams(dataPathB, 1)
 
-    tfDictA = getTFDictionaryWithNgrams(dataPathA, 1)
-    tfDictB = getTFDictionaryWithNgrams(dataPathB, 1)
+    # for file1 in files1:
+    #     weightsA.append(normalizeDocumentMass(
+    #         getTFWeightsForFile(
+    #             file1,
+    #             dataPathA,
+    #             tfDictA,
+    #             getIDFWeightingsForFile(file1, dataPathA, idfDictA)
+    #         )
+    #     ))
+    # for file2 in files2:
+    #     weightsB.append(normalizeDocumentMass(
+    #         getTFWeightsForFile(
+    #             file2,
+    #             dataPathB,
+    #             tfDictB,
+    #             getIDFWeightingsForFile(file2, dataPathB, idfDictB)
+    #         )
+    #     ))
+
+    sentenceDictA = getSentenceDict(dataPathA)
+    sentenceDictB = getSentenceDict(dataPathB)
 
     for file1 in files1:
         weightsA.append(normalizeDocumentMass(
-            getTFWeightsForFile(
-                file1,
-                dataPathA,
-                tfDictA,
-                getIDFWeightingsForFile(file1, dataPathA, idfDictA)
-            )
+            getIDFWeightingsForFile(file1, dataPathA, sentenceDictA)
         ))
     for file2 in files2:
         weightsB.append(normalizeDocumentMass(
-            getTFWeightsForFile(
-                file2,
-                dataPathB,
-                tfDictB,
-                getIDFWeightingsForFile(file2, dataPathB, idfDictB)
-            )
+            getIDFWeightingsForFile(file2, dataPathB, sentenceDictB)
         ))
 
     tempDistances = []
@@ -170,14 +178,14 @@ def SLIDFAlignment(embedPathA, embedPathB, dataPathA, dataPathB):
     weightsA = []
     weightsB = []
 
-    # sentenceDictA = getSentenceDict(dataPathA)
-    # sentenceDictB = getSentenceDict(dataPathB)
+    sentenceDictA = getSentenceDict(dataPathA)
+    sentenceDictB = getSentenceDict(dataPathB)
 
-    idfDictA = getIDFDictionaryWithNgrams(dataPathA, 6)
-    idfDictB = getIDFDictionaryWithNgrams(dataPathB, 6)
+    # idfDictA = getIDFDictionaryWithNgrams(dataPathA, 6)
+    # idfDictB = getIDFDictionaryWithNgrams(dataPathB, 6)
 
-    tfDictA = getTFDictionaryWithNgrams(dataPathA, 1)
-    tfDictB = getTFDictionaryWithNgrams(dataPathB, 1)
+    # tfDictA = getTFDictionaryWithNgrams(dataPathA, 1)
+    # tfDictB = getTFDictionaryWithNgrams(dataPathB, 1)
 
     tempweightA1 = []
     tempweightA2 = []
@@ -186,26 +194,32 @@ def SLIDFAlignment(embedPathA, embedPathB, dataPathA, dataPathB):
 
     for file1 in files1:
         tempweightA1.append(np.array(getSentenceLengthWeightings(dataPathA, file1, 'en')))
-        tempweightA2.append(normalizeDocumentMass(
-            getTFWeightsForFile(
-                file1,
-                dataPathA,
-                tfDictA,
-                getIDFWeightingsForFile(file1, dataPathA, idfDictA)
-            )
-        ))
+        # tempweightA2.append(normalizeDocumentMass(
+        #     getTFWeightsForFile(
+        #         file1,
+        #         dataPathA,
+        #         tfDictA,
+        #         getIDFWeightingsForFile(file1, dataPathA, idfDictA)
+        #     )
+        # ))
+        tempweightA2.append(
+            getIDFWeightingsForFile(file1, dataPathA, sentenceDictA)
+        )
         # tempweightA2.append(np.array(getIDFWeightingForEquationEight(file1, dataPathA, sentenceDictA)))
     # print("weights A")
     for file2 in files2:
         tempweightB1.append(np.array(getSentenceLengthWeightings(dataPathB, file2, 'ta')))
-        tempweightB2.append(normalizeDocumentMass(
-            getTFWeightsForFile(
-                file2,
-                dataPathB,
-                tfDictB,
-                getIDFWeightingsForFile(file2, dataPathB, idfDictB)
-            )
-        ))
+        # tempweightB2.append(normalizeDocumentMass(
+        #     getTFWeightsForFile(
+        #         file2,
+        #         dataPathB,
+        #         tfDictB,
+        #         getIDFWeightingsForFile(file2, dataPathB, idfDictB)
+        #     )
+        # ))
+        tempweightB2.append(
+            getIDFWeightingsForFile(file2, dataPathB, sentenceDictB)
+        )
         # tempweightB2.append(np.array(getIDFWeightingForEquationEight(file2, dataPathB, sentenceDictB)))
     # print("weigths B")
 
@@ -216,7 +230,7 @@ def SLIDFAlignment(embedPathA, embedPathB, dataPathA, dataPathB):
 
     tempDistances = []
     for i in range(len(files1)):
-        print("i",i)
+        # print("i",i)
         for j in range(len(files2)):
             weightA = weightsA[i].copy()
             weightB = weightsB[j].copy()
@@ -248,12 +262,12 @@ def loadDictionaries():
     namesA = open(inputpaths.personNamesA).readlines()
     namesB = open(inputpaths.personNamesB).readlines()
 
-    for i in range(len(wordsA)):
-        wordA = wordsA[i].strip().replace("\n", "")
-        if (wordDictionary.get(wordA, False)):
-            wordDictionary[wordA].append(wordsB[i].strip().replace("\n", ""))
-        else:
-            wordDictionary[wordA]  = [wordsB[i].strip().replace("\n", "")]
+    # for i in range(len(wordsA)):
+    #     wordA = wordsA[i].strip().replace("\n", "")
+    #     if (wordDictionary.get(wordA, False)):
+    #         wordDictionary[wordA].append(wordsB[i].strip().replace("\n", ""))
+    #     else:
+    #         wordDictionary[wordA]  = [wordsB[i].strip().replace("\n", "")]
     for  i in range(len(namesA)):
         nameA = namesA[i].strip().replace("\n", "")
         if (wordDictionary.get(nameA, False)):

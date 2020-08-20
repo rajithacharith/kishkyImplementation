@@ -10,21 +10,30 @@ def loadDictionaries():
         if (wordDictionary.get(enword, False)):
             wordDictionary[enword].append(taWords[i].strip().replace("\n", ""))
         else:
-            wordDictionary[enword]  = [taWords[i].strip().replace("\n", "")]
+            wordDictionary[enword] = [taWords[i].strip().replace("\n", "")]
+    print(len(wordDictionary))
 
 
 def mapWords(enWords, taLine):
     enLine = " ".join(enWords)
+    talinewords = taLine.split()
     for i in range(0, len(enWords)):
         tawords = wordDictionary.get(enWords[i], False)
         if (tawords):
+            # print(tawords)
             for taword in tawords:
-                if (taword in taLine):
+                if (taword in talinewords):
                     taLine = taLine.replace(taword, "")
                     enLine = enLine.replace(enWords[i], "")
+                    talinewords.remove(taword)
     taLine = " ".join(taLine.strip().split())
     enLine = " ".join(enLine.strip().split())
-    wordDictionary[enLine] = [taLine]
+    if (len(taLine) > 1):
+        # print(taLine)
+        if (wordDictionary.get(enLine, False)):
+            wordDictionary[enLine].append(taLine)
+        else:
+            wordDictionary[enLine] = [taLine]
 
 ################################
 # execution
@@ -48,4 +57,4 @@ with open("./Dictionaries/EN-TA/combinedGlossary.en", "w") as enwritefile:
             for value in values:
                 enwritefile.write(key + "\n")
                 tawritefile.write(value + "\n")
-            print(key, values)
+            # print(key, values)

@@ -48,7 +48,7 @@ def greedyMoversDistance(docA, docB, weightsA, weightsB, embedpathA, embedpathB,
         vecB = docVecB[sortedPair["j"]]
         # only euclidean
         distance = distance + (
-            np.linalg.norm(vecA - vecB) * flow# * calcDicWeightForLine(docFileA[sortedPair["i"]], docFileB[sortedPair["j"]], wordDictionary)
+            np.linalg.norm(vecA - vecB) * flow * calcDicWeightForLine(docFileA[sortedPair["i"]], docFileB[sortedPair["j"]], wordDictionary)
             )
         # only cosine
         # distance = distance + (1 - np.dot(vecA, vecB)/(np.linalg.norm(vecA)*np.linalg.norm(vecB))) * flow
