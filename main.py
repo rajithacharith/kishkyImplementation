@@ -39,12 +39,12 @@ def runDatewise():
             enDays = os.listdir(embeddingPathA + enYear + "/" + enMonth + "/")
             for enDay in enDays:
                 # sentence length
-                matchedpairs = SentenceLengthAlignment(
-                    embeddingPathA + enYear + "/" + enMonth + "/" + enDay + "/",
-                    embeddingPathB + enYear + "/" + enMonth + "/" + enDay + "/",
-                    datPathA + enYear + "/" + enMonth + "/" + enDay + "/",
-                    datPathB + enYear + "/" + enMonth + "/" + enDay + "/"
-                    )
+                # matchedpairs = SentenceLengthAlignment(
+                #     embeddingPathA + enYear + "/" + enMonth + "/" + enDay + "/",
+                #     embeddingPathB + enYear + "/" + enMonth + "/" + enDay + "/",
+                #     datPathA + enYear + "/" + enMonth + "/" + enDay + "/",
+                #     datPathB + enYear + "/" + enMonth + "/" + enDay + "/"
+                #     )
                 # idf
                 # matchedpairs = IDFAlignment(
                 #     embeddingPathA + enYear + "/" + enMonth + "/" + enDay + "/",
@@ -53,12 +53,12 @@ def runDatewise():
                 #     datPathB + enYear + "/" + enMonth + "/" + enDay + "/"
                 #     )
                 # slidf
-                # matchedpairs = SLIDFAlignment(
-                #     embeddingPathA + enYear + "/" + enMonth + "/" + enDay + "/",
-                #     embeddingPathB + enYear + "/" + enMonth + "/" + enDay + "/",
-                #     datPathA + enYear + "/" + enMonth + "/" + enDay + "/",
-                #     datPathB + enYear + "/" + enMonth + "/" + enDay + "/"
-                #     )
+                matchedpairs = SLIDFAlignment(
+                    embeddingPathA + enYear + "/" + enMonth + "/" + enDay + "/",
+                    embeddingPathB + enYear + "/" + enMonth + "/" + enDay + "/",
+                    datPathA + enYear + "/" + enMonth + "/" + enDay + "/",
+                    datPathB + enYear + "/" + enMonth + "/" + enDay + "/"
+                    )
                 print(enYear, enMonth, enDay)
                 # print(len(matchedpairs))
                 # print(matchedpairs)
@@ -97,10 +97,10 @@ def SentenceLengthAlignment(embedPathA, embedPathB, dataPathA, dataPathB): # hir
     mergeSort(tempDistances)
     matchedPairs = competitiveMatching(tempDistances)
 
-    count = 0
-    for matchedPair in matchedPairs:
-        if matchedPair["a"] == matchedPair["b"]:
-            count = count + 1
+    # count = 0
+    # for matchedPair in matchedPairs:
+    #     if matchedPair["a"] == matchedPair["b"]:
+    #         count = count + 1
     return matchedPairs
 
 def IDFAlignment(embedPathA, embedPathB, dataPathA, dataPathB):
@@ -161,10 +161,10 @@ def IDFAlignment(embedPathA, embedPathB, dataPathA, dataPathB):
     mergeSort(tempDistances)
     matchedPairs = competitiveMatching(tempDistances)
 
-    count = 0
-    for matchedPair in matchedPairs:
-        if matchedPair["a"] == matchedPair["b"]:
-            count = count + 1
+    # count = 0
+    # for matchedPair in matchedPairs:
+    #     if matchedPair["a"] == matchedPair["b"]:
+    #         count = count + 1
     return matchedPairs
 
 def SLIDFAlignment(embedPathA, embedPathB, dataPathA, dataPathB):
@@ -238,10 +238,10 @@ def SLIDFAlignment(embedPathA, embedPathB, dataPathA, dataPathB):
     mergeSort(tempDistances)
     matchedPairs = competitiveMatching(tempDistances)
 
-    count = 0
-    for matchedPair in matchedPairs:
-        if matchedPair["a"] == matchedPair["b"]:
-            count = count + 1
+    # count = 0
+    # for matchedPair in matchedPairs:
+    #     if matchedPair["a"] == matchedPair["b"]:
+    #         count = count + 1
     # print(matchedPairs)
     # print("SLIDF count for " + dataPathA.split("/")[10] + " - " + dataPathA.split("/")[11] + " : " + str(count))
     return matchedPairs

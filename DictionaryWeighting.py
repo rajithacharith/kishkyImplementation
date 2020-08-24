@@ -5,52 +5,6 @@ siDesigList = []
 
 desigDic = {}
 
-
-# # with open("/home/dilan/Private/Projects/FYP/kishkyImplementation/DMS/smt_nmt_datasets/si-en lists/designation.en", "r") as tempfile1:
-# # with open("/home/dilan/Private/Projects/FYP/kishkyImplementation/DMS/smt_nmt_datasets/ta-en lists/designation.en", "r") as tempfile1:
-# # with open("/home/dilan/Private/Projects/FYP/kishkyImplementation/DMS/smt_nmt_datasets/si-ta lists/parallel-designations-term1-tr.cl.si-ta.si", "r") as tempfile1:
-# with open(inputpaths.designationsA) as designationsFileA:
-#     # with open("/home/dilan/Private/Projects/FYP/kishkyImplementation/DMS/smt_nmt_datasets/si-en lists/designation.si", "r") as tempfile2:
-#     # with open("/home/dilan/Private/Projects/FYP/kishkyImplementation/DMS/smt_nmt_datasets/ta-en lists/designation.ta", "r") as tempfile2:
-#     # with open("/home/dilan/Private/Projects/FYP/kishkyImplementation/DMS/smt_nmt_datasets/si-ta lists/parallel-designations-term1-tr.cl.si-ta.ta", "r") as tempfile2:
-#     with open(inputpaths.designationsB) as designationsFileB:
-#         linesA = designationsFileA.readlines()
-#         linesB = designationsFileB.readlines()
-#         # for line in enlines:
-#         #     enDesigList.append(line.strip().replace("\n", "").lower())
-#         # for line in silines:
-#         #     siDesigList.append(line.strip().replace("\n", "").lower())
-#         for i in range(len(linesA)):
-#             desigDic[linesA[i].strip().replace("\n", "").lower()] = linesB[i].strip().replace("\n", "")
-
-
-
-wordDictionary = {}
-with open(inputpaths.designationsA) as designationsFileA:
-    with open(inputpaths.designationsB) as designationsFileB:
-        linesA = designationsFileA.readlines()
-        linesB = designationsFileB.readlines()
-        for i in range(len(linesA)):
-            word = linesA[i].strip().replace("\n", "").lower()
-            if (wordDictionary.get(word, False)):
-                wordDictionary[word].append(linesB[i].strip().replace("\n", ""))
-            else:
-                wordDictionary[word]  = [linesB[i].strip().replace("\n", "")]
-
-with open(inputpaths.existingDictionaryA) as dictionaryFileA:
-    with open(inputpaths.existingDictionaryB) as dictionaryFileB:
-        linesA = dictionaryFileA.readlines()
-        linesB = dictionaryFileB.readlines()
-        for i in range(len(linesA)):
-            word = linesA[i].strip().replace("\n", "").lower()
-            if (wordDictionary.get(word, False)):
-                if (linesB[i].strip().replace("\n", "") not in wordDictionary.get(word)):
-                    wordDictionary[word].append(linesB[i].strip().replace("\n", ""))
-            else:
-                wordDictionary[word]  = [linesB[i].strip().replace("\n", "")]
-
-
-
 ############# not needed
 
 # def calcDictionaryWeight(fileA, fileB, pathA, pathB, wordDictionary):
@@ -106,6 +60,24 @@ with open(inputpaths.existingDictionaryA) as dictionaryFileA:
 
 ############# not needed end
 
+
+# # with open("/home/dilan/Private/Projects/FYP/kishkyImplementation/DMS/smt_nmt_datasets/si-en lists/designation.en", "r") as tempfile1:
+# # with open("/home/dilan/Private/Projects/FYP/kishkyImplementation/DMS/smt_nmt_datasets/ta-en lists/designation.en", "r") as designationsFileA:
+# # with open("/home/dilan/Private/Projects/FYP/kishkyImplementation/DMS/smt_nmt_datasets/si-ta lists/parallel-designations-term1-tr.cl.si-ta.si", "r") as tempfile1:
+# with open(inputpaths.designationsA) as designationsFileA:
+#     # with open("/home/dilan/Private/Projects/FYP/kishkyImplementation/DMS/smt_nmt_datasets/si-en lists/designation.si", "r") as tempfile2:
+#     # with open("/home/dilan/Private/Projects/FYP/kishkyImplementation/DMS/smt_nmt_datasets/ta-en lists/designation.ta", "r") as designationsFileB:
+#     # with open("/home/dilan/Private/Projects/FYP/kishkyImplementation/DMS/smt_nmt_datasets/si-ta lists/parallel-designations-term1-tr.cl.si-ta.ta", "r") as tempfile2:
+#     with open(inputpaths.designationsB) as designationsFileB:
+#         linesA = designationsFileA.readlines()
+#         linesB = designationsFileB.readlines()
+#         # for line in enlines:
+#         #     enDesigList.append(line.strip().replace("\n", "").lower())
+#         # for line in silines:
+#         #     siDesigList.append(line.strip().replace("\n", "").lower())
+#         for i in range(len(linesA)):
+#             desigDic[linesA[i].strip().replace("\n", "").lower()] = linesB[i].strip().replace("\n", "")
+
 # def checkDesignations(lineA, lineB):
 #     count = 1
 #     wordsA = lineA.strip().replace("\n", "").replace(".", "").lower().split()
@@ -130,8 +102,8 @@ with open(inputpaths.existingDictionaryA) as dictionaryFileA:
 #     return count
 
 # def calcDicWeightForLine(lineA, lineB, wordDictionary):
-#     # count = checkDesignations(lineA, lineB)
-#     count = 1
+#     count = checkDesignations(lineA, lineB)
+#     # count = 1
 #     wordsA = lineA.split()
 #     wordsB = lineB.split()
 #     for i in range(len(wordsA)):
@@ -145,15 +117,34 @@ with open(inputpaths.existingDictionaryA) as dictionaryFileA:
 #                 if (value in wordsB):
 #                     count = count + 1
 #                     wordsB.remove(value)
-#                     if (len(wordA.split()) > 1):
-#                         print(wordA, count)
-#                     # else:
-#                     #     print(wordA)
 #     return (len(wordsA) - count)/len(wordsA)
 
 
 
-# toter = 0
+
+wordDictionary = {}
+with open(inputpaths.designationsA) as designationsFileA:
+    with open(inputpaths.designationsB) as designationsFileB:
+        linesA = designationsFileA.readlines()
+        linesB = designationsFileB.readlines()
+        for i in range(len(linesA)):
+            word = linesA[i].strip().replace("\n", "").lower()
+            if (wordDictionary.get(word, False)):
+                wordDictionary[word].append(linesB[i].strip().replace("\n", ""))
+            else:
+                wordDictionary[word]  = [linesB[i].strip().replace("\n", "")]
+
+# with open(inputpaths.existingDictionaryA) as dictionaryFileA:
+#     with open(inputpaths.existingDictionaryB) as dictionaryFileB:
+#         linesA = dictionaryFileA.readlines()
+#         linesB = dictionaryFileB.readlines()
+#         for i in range(len(linesA)):
+#             word = linesA[i].strip().replace("\n", "").lower()
+#             if (wordDictionary.get(word, False)):
+#                 if (linesB[i].strip().replace("\n", "") not in wordDictionary.get(word)):
+#                     wordDictionary[word].append(linesB[i].strip().replace("\n", ""))
+#             else:
+#                 wordDictionary[word]  = [linesB[i].strip().replace("\n", "")]
 
 def checkDictionary(lineA, lineB):
     count = 1
@@ -180,7 +171,7 @@ def checkDictionary(lineA, lineB):
                                     wordsB.remove(val)
                             except:
                                 pass
-                            lineB = " ".join(wordsB)
+                            # lineB = " ".join(wordsB)
     else:
         for i in range(1, len(wordsA) + 1):
             for j in range(0, len(wordsA) - (i - 1)):
@@ -188,20 +179,19 @@ def checkDictionary(lineA, lineB):
                 y = wordDictionary.get(x, False)
                 if (y):
                     for value in y:
-                        for value in y:
-                            contain = True
-                            for val in value.split():
-                                if (val.strip() not in wordsB):
-                                    contain = False
-                                    break
-                            if (contain):
-                                count = count + len(x.split())
-                                try:
-                                    for val in value.split():
-                                        wordsB.remove(val)
-                                except:
-                                    pass
-                                lineB = " ".join(wordsB)
+                        contain = True
+                        for val in value.split():
+                            if (val.strip() not in wordsB):
+                                contain = False
+                                break
+                        if (contain):
+                            count = count + len(x.split())
+                            try:
+                                for val in value.split():
+                                    wordsB.remove(val)
+                            except:
+                                pass
+                            # lineB = " ".join(wordsB)
     return count
 
 def calcDicWeightForLine(lineA, lineB, personNamesDictionary):
@@ -222,4 +212,4 @@ def calcDicWeightForLine(lineA, lineB, personNamesDictionary):
                     wordsB.remove(value)
     return (len(wordsA) - count)/len(wordsA)
 
-## future - use character matching for කතුවැකියෙන්, කතුවැකි etc
+# ## future - use character matching for කතුවැකියෙන්, කතුවැකි etc
