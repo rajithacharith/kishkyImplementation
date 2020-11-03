@@ -109,10 +109,10 @@ for i in range(len(enGlossWords)):
     words = enGlossWords[i].strip().replace("\n", "").lower().split()
     mapWords(words, siGlossWords[i].strip().replace("\n", ""))
 
-# with open("./Dictionaries/EN-SI/test.en", "w") as enwritefile:
-#     with open("./Dictionaries/EN-SI/test.si", "w") as siwritefile:
-#         for key, values in wordDictionary.items():
-#             for value in values:
-#                 enwritefile.write(key + "\n")
-#                 siwritefile.write(value + "\n")
-            # print(key, values)
+with open("./Dictionaries/EN-SI/test.en", "w") as enwritefile:
+    with open("./Dictionaries/EN-SI/test.si", "w") as siwritefile:
+        for key, values in wordDictionary.items():
+            for value in values:
+                enwritefile.write(key + "\n")
+                siwritefile.write(value + "\n")
+            print(key, values)

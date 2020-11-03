@@ -1,13 +1,13 @@
 import numpy as np
 import os
 import inputpaths
-# import pickle
+import pickle
 import time
 from DictionaryWeighting import calcDicWeightForLine
 
 dim = 1024
-# filename = '/home/dilan/Private/Projects/FYP/Supervised Distance Metric/model2_itm2.sav'
-# loaded_model = pickle.load(open(filename, 'rb'))
+filename = '/home/dilan/Private/Projects/FYP/kishkyImplementation/model2_itm2.sav'
+loaded_model = pickle.load(open(filename, 'rb'))
 # Input for the method must be array of tuples
 
 # def greedyMoversDistance(docA, docB, weightsA, weightsB, embedpathA, embedpathB):
@@ -47,9 +47,9 @@ def greedyMoversDistance(docA, docB, weightsA, weightsB, embedpathA, embedpathB,
         vecA = docVecA[sortedPair["i"]]
         vecB = docVecB[sortedPair["j"]]
         # only euclidean
-        distance = distance + (
-            np.linalg.norm(vecA - vecB) * flow * calcDicWeightForLine(docFileA[sortedPair["i"]], docFileB[sortedPair["j"]], wordDictionary)
-            )
+        # distance = distance + (
+        #     np.linalg.norm(vecA - vecB) * flow * calcDicWeightForLine(docFileA[sortedPair["i"]], docFileB[sortedPair["j"]], wordDictionary)
+        #     )
         # only cosine
         # distance = distance + (1 - np.dot(vecA, vecB)/(np.linalg.norm(vecA)*np.linalg.norm(vecB))) * flow
         # cosine + euclidean
@@ -62,6 +62,10 @@ def greedyMoversDistance(docA, docB, weightsA, weightsB, embedpathA, embedpathB,
         #         loaded_model.score_pairs([(vecA, vecB)])[0]
         #         ) * flow * calcDicWeightForLine(docFileA[sortedPair["i"]], docFileB[sortedPair["j"]], wordDictionary)
         # )
+        # average all
+        distance = distance + (
+            ((loaded_model.score_pairs([(vecA, vecB)])[0] + (1 - np.dot(vecA, vecB)/(np.linalg.norm(vecA)*np.linalg.norm(vecB))) + np.linalg.norm(vecA - vecB))/3) * flow #* calcDicWeightForLine(docFileA[sortedPair["i"]], docFileB[sortedPair["j"]], wordDictionary)
+        )
         # print(distance)
     # dicWeight = calcDictionaryWeight(docA, docB, embedpathA, embedpathB, wordDictionary)
     # return distance * dicWeight
@@ -71,11 +75,14 @@ def getSortedDistances(docVecA, docVecB):
     eucDistances = np.array([])
     for i in range(len(docVecA)):
         for j in range(len(docVecB)):
-            eucDistances = np.append(eucDistances, [np.linalg.norm(docVecA[i] - docVecB[j])])
+            # eucDistances = np.append(eucDistances, [np.linalg.norm(docVecA[i] - docVecB[j])])
             # eucDistances = np.append(eucDistances,
             #     [((1 - np.dot(docVecA[i], docVecB[j])/(np.linalg.norm(docVecA[i])*np.linalg.norm(docVecB[j]))) + np.linalg.norm(docVecA[i] - docVecB[j]))])
             # eucDistances = np.append(eucDistances,
             #     [loaded_model.score_pairs([(docVecA[i], docVecB[j])])[0]])
+            # average all
+            eucDistances = np.append(eucDistances,
+                [(loaded_model.score_pairs([(docVecA[i], docVecB[j])])[0] + np.linalg.norm(docVecA[i] - docVecB[j]) + (1 - np.dot(docVecA[i], docVecB[j])/(np.linalg.norm(docVecA[i])*np.linalg.norm(docVecB[j]))))/3])
             # print(eucDistances)
     sortedVecs = []
     for i in range(len(eucDistances)):

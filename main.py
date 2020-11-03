@@ -39,12 +39,12 @@ def runDatewise():
             enDays = os.listdir(embeddingPathA + enYear + "/" + enMonth + "/")
             for enDay in enDays:
                 # sentence length
-                # matchedpairs = SentenceLengthAlignment(
-                #     embeddingPathA + enYear + "/" + enMonth + "/" + enDay + "/",
-                #     embeddingPathB + enYear + "/" + enMonth + "/" + enDay + "/",
-                #     datPathA + enYear + "/" + enMonth + "/" + enDay + "/",
-                #     datPathB + enYear + "/" + enMonth + "/" + enDay + "/"
-                #     )
+                matchedpairs = SentenceLengthAlignment(
+                    embeddingPathA + enYear + "/" + enMonth + "/" + enDay + "/",
+                    embeddingPathB + enYear + "/" + enMonth + "/" + enDay + "/",
+                    datPathA + enYear + "/" + enMonth + "/" + enDay + "/",
+                    datPathB + enYear + "/" + enMonth + "/" + enDay + "/"
+                    )
                 # idf
                 # matchedpairs = IDFAlignment(
                 #     embeddingPathA + enYear + "/" + enMonth + "/" + enDay + "/",
@@ -53,12 +53,12 @@ def runDatewise():
                 #     datPathB + enYear + "/" + enMonth + "/" + enDay + "/"
                 #     )
                 # slidf
-                matchedpairs = SLIDFAlignment(
-                    embeddingPathA + enYear + "/" + enMonth + "/" + enDay + "/",
-                    embeddingPathB + enYear + "/" + enMonth + "/" + enDay + "/",
-                    datPathA + enYear + "/" + enMonth + "/" + enDay + "/",
-                    datPathB + enYear + "/" + enMonth + "/" + enDay + "/"
-                    )
+                # matchedpairs = SLIDFAlignment(
+                #     embeddingPathA + enYear + "/" + enMonth + "/" + enDay + "/",
+                #     embeddingPathB + enYear + "/" + enMonth + "/" + enDay + "/",
+                #     datPathA + enYear + "/" + enMonth + "/" + enDay + "/",
+                #     datPathB + enYear + "/" + enMonth + "/" + enDay + "/"
+                #     )
                 print(enYear, enMonth, enDay)
                 # print(len(matchedpairs))
                 # print(matchedpairs)
