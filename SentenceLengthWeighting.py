@@ -1,7 +1,9 @@
 import inputpaths
 
 def getSentenceLengthWeightings(datapath, fileName, lang):
-    docFile = open(datapath + fileName.replace("raw", "txt"))
+    fnames = doc.split(".")
+    newfname = ".".join(fnames[0: -1])
+    docFile = open(datapath + newfname + ".txt")
     sentenceCounts = getSentenceCounts(docFile, lang)
     weightings = []
     total = getTotalTokenCount(sentenceCounts)
