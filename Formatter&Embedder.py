@@ -244,7 +244,6 @@ def getFromNewsfirstFolder():
             formatArmyFileForEmbedding("/home/dilan/Private/Projects/FYP/Data-ToFormat/newsfirst/English/" + enfile, "/home/dilan/Private/Projects/FYP/Data-Formatted/newsfirst/en/" + enfile.replace(".json", ".txt"), "en")
 
 def formatDateWiseWithoutParallelChecking(news):
-    print("Bye")
     sipath = "/home/dilan/Private/Projects/FYP/Data-ToFormat/date_split/" + news + "/sinhala/"
     enpath = "/home/dilan/Private/Projects/FYP/Data-ToFormat/date_split/" + news + "/english/"
     tapath = "/home/dilan/Private/Projects/FYP/Data-ToFormat/date_split/" + news + "/tamil/"
@@ -305,29 +304,29 @@ def formatDateWiseWithoutParallelChecking(news):
     # converBatchToEmbedding("en")
     for tamonth in tamonths:
         try:
-            os.mkdir("/home/dilan/Private/Projects/FYP/Data-Formatted/datewise/" + news + "/ta/" + tamonth)
-            os.mkdir("/home/dilan/Private/Projects/FYP/Embeddings/datewise/" + news + "/ta/" + tamonth)
+            os.mkdir("/home/dilan/Private/Projects/FYP1/Data-Formatted/datewise/" + news + "/ta/" + tamonth)
+            os.mkdir("/home/dilan/Private/Projects/FYP1/Embeddings/datewise/" + news + "/ta/" + tamonth)
         except:
             print(" ")
         tadays = os.listdir(tapath + tamonth + "/")
         for taday in tadays:
             try:
-                os.mkdir("/home/dilan/Private/Projects/FYP/Data-Formatted/datewise/" + news + "/ta/" + tamonth + "/" + taday)
-                os.mkdir("/home/dilan/Private/Projects/FYP/Embeddings/datewise/" + news + "/ta/" + tamonth + "/" + taday)
+                os.mkdir("/home/dilan/Private/Projects/FYP1/Data-Formatted/datewise/" + news + "/ta/" + tamonth + "/" + taday)
+                os.mkdir("/home/dilan/Private/Projects/FYP1/Embeddings/datewise/" + news + "/ta/" + tamonth + "/" + taday)
             except:
                 print(" ")
             tafiles = os.listdir(tapath + tamonth + "/" + taday + "/")
             for tafile in tafiles:
                 formatArmyFileForEmbedding(tapath + tamonth + "/" + taday + "/" + tafile, 
-                "/home/dilan/Private/Projects/FYP/Data-Formatted/datewise/" + news + "/ta/" 
+                "/home/dilan/Private/Projects/FYP1/Data-Formatted/datewise/" + news + "/ta/" 
                 + tamonth + "/" + taday + "/" + tafile.replace("json", "txt"), "ta")
                 # convertToEmbedding("/home/dilan/Private/Projects/FYP/Data-Formatted/datewise/" + news + "/ta/"
                 # + tamonth + "/" + taday + "/" + tafile.replace("json", "txt"),
                 # "/home/dilan/Private/Projects/FYP/Embeddings/datewise/" + news + "/ta/" + tamonth + "/" + taday + "/" + tafile.replace("json", "raw"),
                 # "ta")
-                addToEmbeddingList("/home/dilan/Private/Projects/FYP/Data-Formatted/datewise/" + news + "/ta/"
+                addToEmbeddingList("/home/dilan/Private/Projects/FYP1/Data-Formatted/datewise/" + news + "/ta/"
                 + tamonth + "/" + taday + "/" + tafile.replace("json", "txt"),
-                "/home/dilan/Private/Projects/FYP/Embeddings/datewise/" + news + "/ta/"
+                "/home/dilan/Private/Projects/FYP1/Embeddings/datewise/" + news + "/ta/"
                 + tamonth + "/" + taday + "/" + tafile.replace("json", "raw"))
     converBatchToEmbedding("ta")
 

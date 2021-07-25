@@ -7,17 +7,49 @@ from IDFWeighting import getIDFWeightingsForFile, getSentenceDict, getIDFWeighti
 from DatewiseEvaluater import evaluateDatewise
 import numpy as np
 import inputpaths
+import sys
+import pickle
 
-embeddingPathA = inputpaths.embeddingPathA
-embeddingPathB = inputpaths.embeddingPathB
-datPathA = inputpaths.dataPathA
-datPathB = inputpaths.dataPathB
-paralleltxt = inputpaths.paralleltxt
+# embeddingPathA = inputpaths.embeddingPathA
+# embeddingPathB = inputpaths.embeddingPathB
+# datPathA = inputpaths.dataPathA
+# datPathB = inputpaths.dataPathB
+# paralleltxt = inputpaths.paralleltxt
+
+embeddingPathA = ""
+embeddingPathB = ""
+datPathA = ""
+datPathB = ""
+paralleltxt = ""
+option = ""
+
+dim = 1024
+# filename = '/home/dilan/Private/Projects/FYP/kishkyImplementation/model2_itm2.sav'
+loaded_model = ""
 
 wordDictionary = {}
 
 def main():
-    loadDictionaries()
+    global embeddingPathA
+    global embeddingPathB
+    global datPathA
+    global datPathB
+    global paralleltxt
+
+    global loaded_model
+    global option
+
+    embeddingPathA = sys.argv[1]
+    embeddingPathB = sys.argv[2]
+    datPathA = sys.argv[3]
+    datPathB = sys.argv[4]
+    paralleltxt = sys.argv[5]
+    mlModelPath = sys.argv[6]
+    option = sys.argv[7]
+
+    loaded_model = pickle.load(open(mlModelPath, 'rb'))
+
+    # loadDictionaries()
     runDatewise()
     # runcombined()
 
@@ -92,9 +124,10 @@ def SentenceLengthAlignment(embedPathA, embedPathB, dataPathA, dataPathB): # hir
         for j in range(len(files2)):
             weightA = weightsA[i].copy()
             weightB = weightsB[j].copy()
-            tempDistances.append({"a": files1[i], "b": files2[j], "distance": greedyMoversDistance(files1[i], files2[j], weightA, weightB, embedPathA, embedPathB, wordDictionary)})
+            tempDistances.append({"a": files1[i], "b": files2[j], "distance": greedyMoversDistance(files1[i], files2[j], weightA, weightB, embedPathA, embedPathB, wordDictionary, loaded_model, dataPathA, dataPathB, option)})
 
     mergeSort(tempDistances)
+    print(tempDistances)
     matchedPairs = competitiveMatching(tempDistances)
 
     # count = 0

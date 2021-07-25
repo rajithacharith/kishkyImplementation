@@ -1,4 +1,3 @@
-import numpy as np
 import inputpaths
 
 def getSentenceLengthWeightings(datapath, fileName, lang):
