@@ -1,7 +1,7 @@
 import inputpaths
 
 def getSentenceLengthWeightings(datapath, fileName, lang):
-    fnames = doc.split(".")
+    fnames = fileName.split(".")
     newfname = ".".join(fnames[0: -1])
     docFile = open(datapath + newfname + ".txt")
     sentenceCounts = getSentenceCounts(docFile, lang)
