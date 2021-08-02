@@ -5,7 +5,7 @@ import pickle
 import time
 # from DictionaryWeighting import calcDicWeightForLine
 
-dim = 1024
+# dim = 1024
 # filename = '/home/dilan/Private/Projects/FYP/kishkyImplementation/model2_itm2.sav'
 # loaded_model = pickle.load(open(mlModelPath, 'rb'))
 # Input for the method must be array of tuples
@@ -27,9 +27,9 @@ dim = 1024
 #         distance = distance + np.linalg.norm(vecA - vecB) * flow
 #     return distance
 
-def greedyMoversDistance(docA, docB, weightsA, weightsB, embedpathA, embedpathB, wordDictionary, loaded_model, datapathA, datapathB, option):
-    docVecA = getDocVec(docA, embedpathA, option)
-    docVecB = getDocVec(docB, embedpathB, option)
+def greedyMoversDistance(docA, docB, weightsA, weightsB, embedpathA, embedpathB, wordDictionary, loaded_model, datapathA, datapathB, option, dim):
+    docVecA = getDocVec(docA, embedpathA, option, dim)
+    docVecB = getDocVec(docB, embedpathB, option, dim)
     docFileA = getDocFile(docA, embedpathA, datapathA)
     docFileB = getDocFile(docB, embedpathB, datapathB)
 
@@ -47,9 +47,9 @@ def greedyMoversDistance(docA, docB, weightsA, weightsB, embedpathA, embedpathB,
         vecA = docVecA[sortedPair["i"]]
         vecB = docVecB[sortedPair["j"]]
         # only euclidean
-        distance = distance + (
-            np.linalg.norm(vecA - vecB) * flow #* calcDicWeightForLine(docFileA[sortedPair["i"]], docFileB[sortedPair["j"]], wordDictionary)
-            )
+        # distance = distance + (
+        #     np.linalg.norm(vecA - vecB) * flow #* calcDicWeightForLine(docFileA[sortedPair["i"]], docFileB[sortedPair["j"]], wordDictionary)
+        #     )
 
         # print(np.linalg.norm(vecA - vecB))
         # print(flow)
@@ -61,11 +61,11 @@ def greedyMoversDistance(docA, docB, weightsA, weightsB, embedpathA, embedpathB,
         #     flow * calcDicWeightForLine(docFileA[sortedPair["i"]], docFileB[sortedPair["j"]], wordDictionary)
         #     )
         # metric learning distance
-        # distance = distance + (
-        #     (
-        #         loaded_model.score_pairs([(vecA, vecB)])[0]
-        #         ) * flow # * calcDicWeightForLine(docFileA[sortedPair["i"]], docFileB[sortedPair["j"]], wordDictionary)
-        # )
+        distance = distance + (
+            (
+                loaded_model.score_pairs([(vecA, vecB)])[0]
+                ) * flow # * calcDicWeightForLine(docFileA[sortedPair["i"]], docFileB[sortedPair["j"]], wordDictionary)
+        )
         # average all
         # distance = distance + (
         #     ((loaded_model.score_pairs([(vecA, vecB)])[0] + (1 - np.dot(vecA, vecB)/(np.linalg.norm(vecA)*np.linalg.norm(vecB))) + np.linalg.norm(vecA - vecB))/3) * flow #* calcDicWeightForLine(docFileA[sortedPair["i"]], docFileB[sortedPair["j"]], wordDictionary)
@@ -79,11 +79,11 @@ def getSortedDistances(docVecA, docVecB, loaded_model):
     eucDistances = np.array([])
     for i in range(len(docVecA)):
         for j in range(len(docVecB)):
-            eucDistances = np.append(eucDistances, [np.linalg.norm(docVecA[i] - docVecB[j])])
+            # eucDistances = np.append(eucDistances, [np.linalg.norm(docVecA[i] - docVecB[j])])
             # eucDistances = np.append(eucDistances,
             #     [((1 - np.dot(docVecA[i], docVecB[j])/(np.linalg.norm(docVecA[i])*np.linalg.norm(docVecB[j]))) + np.linalg.norm(docVecA[i] - docVecB[j]))])
-            # eucDistances = np.append(eucDistances,
-            #     [loaded_model.score_pairs([(docVecA[i], docVecB[j])])[0]])
+            eucDistances = np.append(eucDistances,
+                [loaded_model.score_pairs([(docVecA[i], docVecB[j])])[0]])
             # average all
             # eucDistances = np.append(eucDistances,
             #     [(loaded_model.score_pairs([(docVecA[i], docVecB[j])])[0] + np.linalg.norm(docVecA[i] - docVecB[j]) + (1 - np.dot(docVecA[i], docVecB[j])/(np.linalg.norm(docVecA[i])*np.linalg.norm(docVecB[j]))))/3])
@@ -96,7 +96,7 @@ def getSortedDistances(docVecA, docVecB, loaded_model):
         eucDistances[maxi] = 0
     return sortedVecs
 
-def getDocVec(doc, path, option):
+def getDocVec(doc, path, option, dim):
     if (option == "laser"):
         docVec = np.fromfile(path + doc, dtype = np.float32, count = -1)
         docVec.resize(docVec.shape[0] // dim, dim)
