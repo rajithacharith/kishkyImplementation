@@ -102,9 +102,13 @@ def getDocVec(doc, path, option, dim):
         docVec.resize(docVec.shape[0] // dim, dim)
         return docVec
     elif (option == "labse"):
-        pass
+        docVec = np.fromfile(path + doc, dtype = np.float32, count = -1)
+        docVec.resize(docVec.shape[0] // dim, dim)
+        return docVec
     elif (option == "xlmr"):
-        pass
+        docVec = np.fromfile(path + doc, dtype = np.float32, count = -1)
+        docVec.resize(docVec.shape[0] // dim, dim)
+        return docVec
 
 def getDocFile(doc, path, datapath):
     fnames = doc.split(".")
