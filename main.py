@@ -22,11 +22,19 @@ datPathA = ""
 datPathB = ""
 paralleltxt = ""
 option = ""
+personNamesPathA = ""
+personNamesPathB = ""
+designationsPathA = ""
+designationsPathB = ""
+dictionaryPathA = ""
+dictionaryPathB = ""
+combined = 0
 
 dim = 1024
 # filename = '/home/dilan/Private/Projects/FYP/kishkyImplementation/model2_itm2.sav'
 loaded_model = ""
 
+dictDesigDictionary = {}
 wordDictionary = {}
 
 def main():
@@ -40,6 +48,14 @@ def main():
     global option
     global dim
 
+    global personNamesPathA
+    global personNamesPathB
+    global designationsPathA
+    global designationsPathB
+    global dictionaryPathA
+    global dictionaryPathB
+    global combined
+
     embeddingPathA = sys.argv[1]
     embeddingPathB = sys.argv[2]
     datPathA = sys.argv[3]
@@ -48,10 +64,17 @@ def main():
     mlModelPath = sys.argv[6]
     option = sys.argv[7]
     dim = int(sys.argv[8])
+    personNamesPathA = sys.argv[9]
+    personNamesPathB = sys.argv[10]
+    designationsPathA = sys.argv[11]
+    designationsPathB = sys.argv[12]
+    dictionaryPathA = sys.argv[13]
+    dictionaryPathB = sys.argv[14]
+    combined = int(sys.argv[15])
 
     loaded_model = pickle.load(open(mlModelPath, 'rb'))
 
-    # loadDictionaries()
+    loadDictionaries()
     runDatewise()
     # runcombined()
 
@@ -126,7 +149,8 @@ def SentenceLengthAlignment(embedPathA, embedPathB, dataPathA, dataPathB): # hir
         for j in range(len(files2)):
             weightA = weightsA[i].copy()
             weightB = weightsB[j].copy()
-            tempDistances.append({"a": files1[i], "b": files2[j], "distance": greedyMoversDistance(files1[i], files2[j], weightA, weightB, embedPathA, embedPathB, wordDictionary, loaded_model, dataPathA, dataPathB, option, dim)})
+            tempDistances.append({"a": files1[i], "b": files2[j], "distance": greedyMoversDistance(files1[i], files2[j], weightA, weightB, embedPathA, embedPathB, 
+                wordDictionary, loaded_model, dataPathA, dataPathB, option, dim, dictDesigDictionary, combined)})
 
     mergeSort(tempDistances)
     print(tempDistances)
@@ -291,11 +315,11 @@ def loadDictionaries():
     # sitasiNameSet = open("/home/dilan/Private/Projects/FYP/kishkyImplementation/DMS/smt_nmt_datasets/si-ta lists/uniq_names.tok.si-ta.si", "r")
     # sitataNameSet = open("/home/dilan/Private/Projects/FYP/kishkyImplementation/DMS/smt_nmt_datasets/si-ta lists/uniq_names.tok.si-ta.ta", "r")
 
-    wordsA = open(inputpaths.existingDictionaryA).readlines()
-    wordsB = open(inputpaths.existingDictionaryB).readlines()
+    # wordsA = open(inputpaths.existingDictionaryA).readlines()
+    # wordsB = open(inputpaths.existingDictionaryB).readlines()
     
-    namesA = open(inputpaths.personNamesA).readlines()
-    namesB = open(inputpaths.personNamesB).readlines()
+    namesA = open(personNamesPathA).readlines()
+    namesB = open(personNamesPathB).readlines()
 
     # for i in range(len(wordsA)):
     #     wordA = wordsA[i].strip().replace("\n", "")
@@ -309,7 +333,30 @@ def loadDictionaries():
             wordDictionary[nameA].append(namesB[i].strip().replace("\n", ""))
         else:
             wordDictionary[nameA] = [namesB[i].strip().replace("\n", "")]
-    # print(wordDictionary)
+
+    
+    with open(designationsPathA) as designationsFileA:
+        with open(designationsPathB) as designationsFileB:
+            linesA = designationsFileA.readlines()
+            linesB = designationsFileB.readlines()
+            for i in range(len(linesA)):
+                word = linesA[i].strip().replace("\n", "").lower()
+                if (dictDesigDictionary.get(word, False)):
+                    dictDesigDictionary[word].append(linesB[i].strip().replace("\n", ""))
+                else:
+                    dictDesigDictionary[word]  = [linesB[i].strip().replace("\n", "")]
+
+    with open(dictionaryPathA) as dictionaryFileA:
+        with open(dictionaryPathB) as dictionaryFileB:
+            linesA = dictionaryFileA.readlines()
+            linesB = dictionaryFileB.readlines()
+            for i in range(len(linesA)):
+                word = linesA[i].strip().replace("\n", "").lower()
+                if (dictDesigDictionary.get(word, False)):
+                    if (linesB[i].strip().replace("\n", "") not in dictDesigDictionary.get(word)):
+                        dictDesigDictionary[word].append(linesB[i].strip().replace("\n", ""))
+                else:
+                    dictDesigDictionary[word]  = [linesB[i].strip().replace("\n", "")]
 
 if __name__ == "__main__":
     main()

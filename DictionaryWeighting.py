@@ -120,33 +120,7 @@ desigDic = {}
 #     return (len(wordsA) - count)/len(wordsA)
 
 
-
-
-wordDictionary = {}
-with open(inputpaths.designationsA) as designationsFileA:
-    with open(inputpaths.designationsB) as designationsFileB:
-        linesA = designationsFileA.readlines()
-        linesB = designationsFileB.readlines()
-        for i in range(len(linesA)):
-            word = linesA[i].strip().replace("\n", "").lower()
-            if (wordDictionary.get(word, False)):
-                wordDictionary[word].append(linesB[i].strip().replace("\n", ""))
-            else:
-                wordDictionary[word]  = [linesB[i].strip().replace("\n", "")]
-
-with open(inputpaths.existingDictionaryA) as dictionaryFileA:
-    with open(inputpaths.existingDictionaryB) as dictionaryFileB:
-        linesA = dictionaryFileA.readlines()
-        linesB = dictionaryFileB.readlines()
-        for i in range(len(linesA)):
-            word = linesA[i].strip().replace("\n", "").lower()
-            if (wordDictionary.get(word, False)):
-                if (linesB[i].strip().replace("\n", "") not in wordDictionary.get(word)):
-                    wordDictionary[word].append(linesB[i].strip().replace("\n", ""))
-            else:
-                wordDictionary[word]  = [linesB[i].strip().replace("\n", "")]
-
-def checkDictionary(lineA, lineB):
+def checkDictionary(lineA, lineB, wordDictionary):
     count = 1
     wordsA = lineA.strip().replace("\n", "").replace(".", "").lower().split()
     lineB = lineB.strip().replace("\n", "")
@@ -194,9 +168,9 @@ def checkDictionary(lineA, lineB):
                             # lineB = " ".join(wordsB)
     return count
 
-def calcDicWeightForLine(lineA, lineB, personNamesDictionary):
-    # count = checkDictionary(lineA, lineB)
-    count = 1
+def calcDicWeightForLine(lineA, lineB, personNamesDictionary, wordDictionary):
+    count = checkDictionary(lineA, lineB, wordDictionary)
+    # count = 1
     wordsA = lineA.split()
     wordsB = lineB.split()
     for i in range(len(wordsA)):
