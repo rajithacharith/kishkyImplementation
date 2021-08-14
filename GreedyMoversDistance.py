@@ -65,7 +65,7 @@ def greedyMoversDistance(docA, docB, weightsA, weightsB, embedpathA, embedpathB,
             distance = distance + (
                 (
                     loaded_model.score_pairs([(vecA, vecB)])[0]
-                    ) * flow * calcDicWeightForLine(docFileA[sortedPair["i"]], docFileB[sortedPair["j"]], wordDictionary, designationsPathA, designationsPathB, dictionaryPathA, dictionaryPathB)
+                    ) * flow * calcDicWeightForLine(docFileA[sortedPair["i"]], docFileB[sortedPair["j"]], wordDictionary, dictDesigDictionary)
             )
         # average all
         # distance = distance + (
