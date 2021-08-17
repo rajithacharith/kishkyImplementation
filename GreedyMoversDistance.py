@@ -27,13 +27,13 @@ import time
 #         distance = distance + np.linalg.norm(vecA - vecB) * flow
 #     return distance
 
-def greedyMoversDistance(docA, docB, weightsA, weightsB, embedpathA, embedpathB, wordDictionary, loaded_model, datapathA, datapathB, option, dim):
+def greedyMoversDistance(docA, docB, weightsA, weightsB, embedpathA, embedpathB, wordDictionary, loaded_model, datapathA, datapathB, option, dim, metric):
     docVecA = getDocVec(docA, embedpathA, option, dim)
     docVecB = getDocVec(docB, embedpathB, option, dim)
     docFileA = getDocFile(docA, embedpathA, datapathA)
     docFileB = getDocFile(docB, embedpathB, datapathB)
 
-    maxSortedVecs = getSortedDistances(docVecA, docVecB, loaded_model)
+    maxSortedVecs = getSortedDistances(docVecA, docVecB, loaded_model, metric)
     minSortedVecs = np.flipud(maxSortedVecs)
     # print(minSortedVecs)
     distance = 0
@@ -61,11 +61,20 @@ def greedyMoversDistance(docA, docB, weightsA, weightsB, embedpathA, embedpathB,
         #     flow * calcDicWeightForLine(docFileA[sortedPair["i"]], docFileB[sortedPair["j"]], wordDictionary)
         #     )
         # metric learning distance
-        distance = distance + (
-            (
-                loaded_model.score_pairs([(vecA, vecB)])[0]
-                ) * flow # * calcDicWeightForLine(docFileA[sortedPair["i"]], docFileB[sortedPair["j"]], wordDictionary)
-        )
+        if (metric == "metric"):
+            distance = distance + (
+                (
+                    loaded_model.score_pairs([(vecA, vecB)])[0]
+                    ) * flow # * calcDicWeightForLine(docFileA[sortedPair["i"]], docFileB[sortedPair["j"]], wordDictionary)
+            )
+        elif (metric == "cosine"):
+            distance = distance + (1 - np.dot(vecA, vecB)/(np.linalg.norm(vecA)*np.linalg.norm(vecB))) * flow
+        elif (metric == "euclidean"):
+            distance = distance + (
+                np.linalg.norm(vecA - vecB) * flow #* calcDicWeightForLine(docFileA[sortedPair["i"]], docFileB[sortedPair["j"]], wordDictionary)
+                )
+        else:
+            print("Invalid metric")
         # average all
         # distance = distance + (
         #     ((loaded_model.score_pairs([(vecA, vecB)])[0] + (1 - np.dot(vecA, vecB)/(np.linalg.norm(vecA)*np.linalg.norm(vecB))) + np.linalg.norm(vecA - vecB))/3) * flow #* calcDicWeightForLine(docFileA[sortedPair["i"]], docFileB[sortedPair["j"]], wordDictionary)
@@ -75,15 +84,23 @@ def greedyMoversDistance(docA, docB, weightsA, weightsB, embedpathA, embedpathB,
     # return distance * dicWeight
     return distance
 
-def getSortedDistances(docVecA, docVecB, loaded_model):
+def getSortedDistances(docVecA, docVecB, loaded_model, metric):
     eucDistances = np.array([])
     for i in range(len(docVecA)):
         for j in range(len(docVecB)):
             # eucDistances = np.append(eucDistances, [np.linalg.norm(docVecA[i] - docVecB[j])])
             # eucDistances = np.append(eucDistances,
             #     [((1 - np.dot(docVecA[i], docVecB[j])/(np.linalg.norm(docVecA[i])*np.linalg.norm(docVecB[j]))) + np.linalg.norm(docVecA[i] - docVecB[j]))])
-            eucDistances = np.append(eucDistances,
-                [loaded_model.score_pairs([(docVecA[i], docVecB[j])])[0]])
+            if (metric == "metric"):
+                eucDistances = np.append(eucDistances,
+                    [loaded_model.score_pairs([(docVecA[i], docVecB[j])])[0]])
+            elif (metric == "cosine"):
+                eucDistances = np.append(eucDistances,
+                    [1 - np.dot(docVecA[i], docVecB[j])/(np.linalg.norm(docVecA[i])*np.linalg.norm(docVecB[j]))])
+            elif (metric == "euclidean"):
+                eucDistances = np.append(eucDistances, [np.linalg.norm(docVecA[i] - docVecB[j])])
+            else:
+                print("Invalid metric")
             # average all
             # eucDistances = np.append(eucDistances,
             #     [(loaded_model.score_pairs([(docVecA[i], docVecB[j])])[0] + np.linalg.norm(docVecA[i] - docVecB[j]) + (1 - np.dot(docVecA[i], docVecB[j])/(np.linalg.norm(docVecA[i])*np.linalg.norm(docVecB[j]))))/3])

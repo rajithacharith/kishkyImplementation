@@ -22,6 +22,7 @@ datPathA = ""
 datPathB = ""
 paralleltxt = ""
 option = ""
+metric = ""
 
 dim = 1024
 # filename = '/home/dilan/Private/Projects/FYP/kishkyImplementation/model2_itm2.sav'
@@ -39,6 +40,7 @@ def main():
     global loaded_model
     global option
     global dim
+    global metric
 
     embeddingPathA = sys.argv[1]
     embeddingPathB = sys.argv[2]
@@ -48,6 +50,7 @@ def main():
     mlModelPath = sys.argv[6]
     option = sys.argv[7]
     dim = int(sys.argv[8])
+    metric = sys.argv[9]
 
     loaded_model = pickle.load(open(mlModelPath, 'rb'))
 
@@ -126,7 +129,7 @@ def SentenceLengthAlignment(embedPathA, embedPathB, dataPathA, dataPathB): # hir
         for j in range(len(files2)):
             weightA = weightsA[i].copy()
             weightB = weightsB[j].copy()
-            tempDistances.append({"a": files1[i], "b": files2[j], "distance": greedyMoversDistance(files1[i], files2[j], weightA, weightB, embedPathA, embedPathB, wordDictionary, loaded_model, dataPathA, dataPathB, option, dim)})
+            tempDistances.append({"a": files1[i], "b": files2[j], "distance": greedyMoversDistance(files1[i], files2[j], weightA, weightB, embedPathA, embedPathB, wordDictionary, loaded_model, dataPathA, dataPathB, option, dim, metric)})
 
     mergeSort(tempDistances)
     print(tempDistances)
