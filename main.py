@@ -284,7 +284,10 @@ def SLIDFAlignment(embedPathA, embedPathB, dataPathA, dataPathB):
         for j in range(len(files2)):
             weightA = weightsA[i].copy()
             weightB = weightsB[j].copy()
-            tempDistances.append({"a": files1[i], "b": files2[j], "distance": greedyMoversDistance(files1[i], files2[j], weightA, weightB, embedPathA, embedPathB, wordDictionary)})
+            try:
+                tempDistances.append({"a": files1[i], "b": files2[j], "distance": greedyMoversDistance(files1[i], files2[j], weightA, weightB, embedPathA, embedPathB, wordDictionary)})
+            except:
+                print("New")
     mergeSort(tempDistances)
     matchedPairs = competitiveMatching(tempDistances)
 
