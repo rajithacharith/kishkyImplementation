@@ -121,9 +121,15 @@ def SentenceLengthAlignment(embedPathA, embedPathB, dataPathA, dataPathB): # hir
     weightsA = []
     weightsB = []
     for file1 in files1:
-        weightsA.append(normalizeDocumentMass(getSentenceLengthWeightings(dataPathA, file1, 'en')))
+        try:
+            weightsA.append(normalizeDocumentMass(getSentenceLengthWeightings(dataPathA, file1, 'en')))
+        except:
+            print("An exception occurred")
     for file2 in files2:
-        weightsB.append(normalizeDocumentMass(getSentenceLengthWeightings(dataPathB, file2, 'ta')))
+        try:
+            weightsB.append(normalizeDocumentMass(getSentenceLengthWeightings(dataPathB, file2, 'ta')))
+        except:
+            print("An exception occurred")
     tempDistances = []
     for i in range(len(files1)):
         for j in range(len(files2)):
@@ -231,33 +237,39 @@ def SLIDFAlignment(embedPathA, embedPathB, dataPathA, dataPathB):
     tempweightB2 = []
 
     for file1 in files1:
-        tempweightA1.append(np.array(getSentenceLengthWeightings(dataPathA, file1, 'en')))
-        # tempweightA2.append(normalizeDocumentMass(
-        #     getTFWeightsForFile(
-        #         file1,
-        #         dataPathA,
-        #         tfDictA,
-        #         getIDFWeightingsForFile(file1, dataPathA, idfDictA)
-        #     )
-        # ))
-        tempweightA2.append(
-            getIDFWeightingsForFile(file1, dataPathA, sentenceDictA)
-        )
+        try:
+            tempweightA1.append(np.array(getSentenceLengthWeightings(dataPathA, file1, 'en')))
+            # tempweightA2.append(normalizeDocumentMass(
+            #     getTFWeightsForFile(
+            #         file1,
+            #         dataPathA,
+            #         tfDictA,
+            #         getIDFWeightingsForFile(file1, dataPathA, idfDictA)
+            #     )
+            # ))
+            tempweightA2.append(
+                getIDFWeightingsForFile(file1, dataPathA, sentenceDictA)
+            )
+        except:
+            print("Exception")
         # tempweightA2.append(np.array(getIDFWeightingForEquationEight(file1, dataPathA, sentenceDictA)))
     # print("weights A")
     for file2 in files2:
-        tempweightB1.append(np.array(getSentenceLengthWeightings(dataPathB, file2, 'ta')))
-        # tempweightB2.append(normalizeDocumentMass(
-        #     getTFWeightsForFile(
-        #         file2,
-        #         dataPathB,
-        #         tfDictB,
-        #         getIDFWeightingsForFile(file2, dataPathB, idfDictB)
-        #     )
-        # ))
-        tempweightB2.append(
-            getIDFWeightingsForFile(file2, dataPathB, sentenceDictB)
-        )
+        try:
+            tempweightB1.append(np.array(getSentenceLengthWeightings(dataPathB, file2, 'ta')))
+            # tempweightB2.append(normalizeDocumentMass(
+            #     getTFWeightsForFile(
+            #         file2,
+            #         dataPathB,
+            #         tfDictB,
+            #         getIDFWeightingsForFile(file2, dataPathB, idfDictB)
+            #     )
+            # ))
+            tempweightB2.append(
+                getIDFWeightingsForFile(file2, dataPathB, sentenceDictB)
+            )
+        except:
+            print("Exception")
         # tempweightB2.append(np.array(getIDFWeightingForEquationEight(file2, dataPathB, sentenceDictB)))
     # print("weigths B")
 
