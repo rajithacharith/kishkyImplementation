@@ -28,61 +28,64 @@ import time
 #     return distance
 
 def greedyMoversDistance(docA, docB, weightsA, weightsB, embedpathA, embedpathB, wordDictionary, loaded_model, datapathA, datapathB, option, dim, metric):
-    docVecA = getDocVec(docA, embedpathA, option, dim)
-    docVecB = getDocVec(docB, embedpathB, option, dim)
-    docFileA = getDocFile(docA, embedpathA, datapathA)
-    docFileB = getDocFile(docB, embedpathB, datapathB)
+    try:
+        docVecA = getDocVec(docA, embedpathA, option, dim)
+        docVecB = getDocVec(docB, embedpathB, option, dim)
+        docFileA = getDocFile(docA, embedpathA, datapathA)
+        docFileB = getDocFile(docB, embedpathB, datapathB)
 
-    maxSortedVecs = getSortedDistances(docVecA, docVecB, loaded_model, metric)
-    minSortedVecs = np.flipud(maxSortedVecs)
-    # print(minSortedVecs)
-    distance = 0
-    for sortedPair in minSortedVecs:
-        # print(sortedPair)
-        weigVecA = weightsA[sortedPair["i"]]
-        weigVecB = weightsB[sortedPair["j"]]
-        flow = min(weigVecA, weigVecB)
-        weightsA[sortedPair["i"]] = weigVecA - flow
-        weightsB[sortedPair["j"]] = weigVecB - flow
-        vecA = docVecA[sortedPair["i"]]
-        vecB = docVecB[sortedPair["j"]]
-        # only euclidean
-        # distance = distance + (
-        #     np.linalg.norm(vecA - vecB) * flow #* calcDicWeightForLine(docFileA[sortedPair["i"]], docFileB[sortedPair["j"]], wordDictionary)
-        #     )
+        maxSortedVecs = getSortedDistances(docVecA, docVecB, loaded_model, metric)
+        minSortedVecs = np.flipud(maxSortedVecs)
+        # print(minSortedVecs)
+        distance = 0
+        for sortedPair in minSortedVecs:
+            # print(sortedPair)
+            weigVecA = weightsA[sortedPair["i"]]
+            weigVecB = weightsB[sortedPair["j"]]
+            flow = min(weigVecA, weigVecB)
+            weightsA[sortedPair["i"]] = weigVecA - flow
+            weightsB[sortedPair["j"]] = weigVecB - flow
+            vecA = docVecA[sortedPair["i"]]
+            vecB = docVecB[sortedPair["j"]]
+            # only euclidean
+            # distance = distance + (
+            #     np.linalg.norm(vecA - vecB) * flow #* calcDicWeightForLine(docFileA[sortedPair["i"]], docFileB[sortedPair["j"]], wordDictionary)
+            #     )
 
-        # print(np.linalg.norm(vecA - vecB))
-        # print(flow)
+            # print(np.linalg.norm(vecA - vecB))
+            # print(flow)
 
-        # only cosine
-        # distance = distance + (1 - np.dot(vecA, vecB)/(np.linalg.norm(vecA)*np.linalg.norm(vecB))) * flow
-        # cosine + euclidean
-        # distance = distance + ((1 - np.dot(vecA, vecB)/(np.linalg.norm(vecA)*np.linalg.norm(vecB))) + np.linalg.norm(vecA - vecB)) * (
-        #     flow * calcDicWeightForLine(docFileA[sortedPair["i"]], docFileB[sortedPair["j"]], wordDictionary)
-        #     )
-        # metric learning distance
-        if (metric == "metric"):
-            distance = distance + (
-                (
-                    loaded_model.score_pairs([(vecA, vecB)])[0]
-                    ) * flow # * calcDicWeightForLine(docFileA[sortedPair["i"]], docFileB[sortedPair["j"]], wordDictionary)
-            )
-        elif (metric == "cosine"):
-            distance = distance + (1 - np.dot(vecA, vecB)/(np.linalg.norm(vecA)*np.linalg.norm(vecB))) * flow
-        elif (metric == "euclidean"):
-            distance = distance + (
-                np.linalg.norm(vecA - vecB) * flow #* calcDicWeightForLine(docFileA[sortedPair["i"]], docFileB[sortedPair["j"]], wordDictionary)
+            # only cosine
+            # distance = distance + (1 - np.dot(vecA, vecB)/(np.linalg.norm(vecA)*np.linalg.norm(vecB))) * flow
+            # cosine + euclidean
+            # distance = distance + ((1 - np.dot(vecA, vecB)/(np.linalg.norm(vecA)*np.linalg.norm(vecB))) + np.linalg.norm(vecA - vecB)) * (
+            #     flow * calcDicWeightForLine(docFileA[sortedPair["i"]], docFileB[sortedPair["j"]], wordDictionary)
+            #     )
+            # metric learning distance
+            if (metric == "metric"):
+                distance = distance + (
+                    (
+                        loaded_model.score_pairs([(vecA, vecB)])[0]
+                        ) * flow # * calcDicWeightForLine(docFileA[sortedPair["i"]], docFileB[sortedPair["j"]], wordDictionary)
                 )
-        else:
-            print("Invalid metric")
-        # average all
-        # distance = distance + (
-        #     ((loaded_model.score_pairs([(vecA, vecB)])[0] + (1 - np.dot(vecA, vecB)/(np.linalg.norm(vecA)*np.linalg.norm(vecB))) + np.linalg.norm(vecA - vecB))/3) * flow #* calcDicWeightForLine(docFileA[sortedPair["i"]], docFileB[sortedPair["j"]], wordDictionary)
-        # )
-        # print(distance)
-    # dicWeight = calcDictionaryWeight(docA, docB, embedpathA, embedpathB, wordDictionary)
-    # return distance * dicWeight
-    return distance
+            elif (metric == "cosine"):
+                distance = distance + (1 - np.dot(vecA, vecB)/(np.linalg.norm(vecA)*np.linalg.norm(vecB))) * flow
+            elif (metric == "euclidean"):
+                distance = distance + (
+                    np.linalg.norm(vecA - vecB) * flow #* calcDicWeightForLine(docFileA[sortedPair["i"]], docFileB[sortedPair["j"]], wordDictionary)
+                    )
+            else:
+                print("Invalid metric")
+            # average all
+            # distance = distance + (
+            #     ((loaded_model.score_pairs([(vecA, vecB)])[0] + (1 - np.dot(vecA, vecB)/(np.linalg.norm(vecA)*np.linalg.norm(vecB))) + np.linalg.norm(vecA - vecB))/3) * flow #* calcDicWeightForLine(docFileA[sortedPair["i"]], docFileB[sortedPair["j"]], wordDictionary)
+            # )
+            # print(distance)
+        # dicWeight = calcDictionaryWeight(docA, docB, embedpathA, embedpathB, wordDictionary)
+        # return distance * dicWeight
+        return distance
+    except:
+        return 0
 
 def getSortedDistances(docVecA, docVecB, loaded_model, metric):
     eucDistances = np.array([])
