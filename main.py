@@ -133,9 +133,12 @@ def SentenceLengthAlignment(embedPathA, embedPathB, dataPathA, dataPathB): # hir
     tempDistances = []
     for i in range(len(files1)):
         for j in range(len(files2)):
-            weightA = weightsA[i].copy()
-            weightB = weightsB[j].copy()
-            tempDistances.append({"a": files1[i], "b": files2[j], "distance": greedyMoversDistance(files1[i], files2[j], weightA, weightB, embedPathA, embedPathB, wordDictionary, loaded_model, dataPathA, dataPathB, option, dim, metric)})
+            try:
+                weightA = weightsA[i].copy()
+                weightB = weightsB[j].copy()
+                tempDistances.append({"a": files1[i], "b": files2[j], "distance": greedyMoversDistance(files1[i], files2[j], weightA, weightB, embedPathA, embedPathB, wordDictionary, loaded_model, dataPathA, dataPathB, option, dim, metric)})
+            except:
+                print("error")
 
     mergeSort(tempDistances)
     print(tempDistances)
